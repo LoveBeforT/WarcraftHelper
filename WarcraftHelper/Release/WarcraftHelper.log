@@ -1,0 +1,8 @@
+﻿  dllmain.cpp
+D:\Visual Studio 2015 Enterprise\VC\atlmfc\include\afx.h(38): warning C4996: 'MBCS_Support_Deprecated_In_MFC': MBCS support in MFC is deprecated and may be removed in a future version of MFC.
+  D:\Visual Studio 2015 Enterprise\VC\atlmfc\include\afx.h(33): note: 参见“MBCS_Support_Deprecated_In_MFC”的声明
+D:\Visual Studio 2015 Enterprise\VC\atlmfc\include\afx.h(78): fatal error C1083: 无法打开包括文件: “new.h”: No such file or directory
+  verinfo.cpp
+C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\include\winnt.h(31): fatal error C1083: 无法打开包括文件: “ctype.h”: No such file or directory
+  WarcraftHelper.cpp
+D:\Visual Studio 2015 Enterprise\VC\include\crtdefs.h(10): fatal error C1083: 无法打开包括文件: “corecrt.h”: No such file or directory
