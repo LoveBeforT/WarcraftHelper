@@ -13,21 +13,57 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="framework.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    <Filter Include="Detours">
+      <UniqueIdentifier>{1276a559-2e47-4e05-bdfc-5ca53ced93c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="helper.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="unlockfps.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="sizebypass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="widescreen.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="hook.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Detours\detours.cpp">
+      <Filter>Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Detours\modules.cpp">
+      <Filter>Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\Detours\disasm.cpp">
+      <Filter>Detours</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="helper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="version.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="widescreen.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="unlockfps.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="sizebypass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="hook.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
