@@ -23,7 +23,7 @@ DWORD __stdcall Listen(LPVOID lpThreadParameter) {
 				MoveWindow(target, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, true);
 			}
 		}
-		Sleep(200);
+		Sleep(100);
 	}
 	return 0;
 }
