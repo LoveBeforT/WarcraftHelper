@@ -163,6 +163,7 @@
     <ClCompile Include="..\ThirdParty\Detours\detours.cpp" />
     <ClCompile Include="..\ThirdParty\Detours\disasm.cpp" />
     <ClCompile Include="..\ThirdParty\Detours\modules.cpp" />
+    <ClCompile Include="CrashFixer.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="helper.cpp" />
     <ClCompile Include="hook.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="unlockfps.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CrashFixer.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="hook.h" />
     <ClInclude Include="sizebypass.h" />

@@ -29,6 +29,7 @@ Helper::Helper() {
 	this->m_SizeBypass = &SizeBypass();
 	this->m_WideScreen = &WideScreen();
 	this->m_UnlockFPS = &UnlockFPS();
+	this->m_CrashFixer = &CrashFixer();
 }
 
 void Helper::Start() {
@@ -39,6 +40,7 @@ void Helper::Start() {
 	this->m_SizeBypass->Start(this->m_GamedllBase, this->m_War3Version);
 	this->m_WideScreen->Start(this->m_GamedllBase, this->m_War3Version);
 	this->m_UnlockFPS->Start(this->m_GamedllBase, this->m_War3Version);
+	this->m_CrashFixer->Start(this->m_GamedllBase, this->m_War3Version);
 }
 
 void Helper::Stop() {
@@ -48,6 +50,7 @@ void Helper::Stop() {
 	this->m_SizeBypass->Stop();
 	this->m_WideScreen->Stop();
 	this->m_UnlockFPS->Stop();
+	this->m_CrashFixer->Stop();
 }
 
 bool Helper::IsWar3() {

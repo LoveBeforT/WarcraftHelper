@@ -3,6 +3,7 @@
 #include "sizebypass.h"
 #include "unlockfps.h"
 #include "widescreen.h"
+#include "CrashFixer.h"
 
 class Helper {
 public:
@@ -17,6 +18,7 @@ private:
 	SizeBypass *m_SizeBypass;
 	WideScreen *m_WideScreen;
 	UnlockFPS *m_UnlockFPS;
+	CrashFixer *m_CrashFixer;
 
 	bool IsWar3();
 };

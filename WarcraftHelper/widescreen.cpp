@@ -81,21 +81,21 @@ void WideScreen::Start(DWORD m_GamedllBase, Version m_War3Version) {
 		MessageBox(0, "War3´°¿Ú»ñÈ¡Ê§°Ü", "WideScreen", 0);
 		return;
 	}
-	DWORD offset = 0;
+	DWORD offset = m_GamedllBase;
 	switch (m_War3Version) {
 	case Version::v120e:
-		offset = 0x0DBD40;
+		offset += 0x0DBD40;
 		break;
 	case Version::v124e:
-		offset = 0x7B6E90;
+		offset += 0x7B6E90;
 		break;
 	case Version::v127a:
-		offset = 0x0D31D0;
+		offset += 0x0D31D0;
 		break;
 	default:
 		return;
 	}
-	Hook((void*)(offset + m_GamedllBase), CreateMatrixPerspectiveFov);
+	Hook((void*)offset, CreateMatrixPerspectiveFov);
 	WideScreen_Hooked = true;
 }
 
