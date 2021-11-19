@@ -5,6 +5,7 @@
 #include "widescreen.h"
 #include "CrashFixer.h"
 #include "windowfixer.h"
+#include "autorep.h"
 
 class Helper {
 public:
@@ -21,6 +22,7 @@ private:
 	UnlockFPS *m_UnlockFPS;
 	CrashFixer *m_CrashFixer;
 	WindowFixer *m_WindowFixer;
+	AutoRep *m_AutoRep;
 
 	bool IsWar3();
 };

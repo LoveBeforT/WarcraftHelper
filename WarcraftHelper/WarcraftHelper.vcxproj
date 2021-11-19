@@ -163,6 +163,7 @@
     <ClCompile Include="..\ThirdParty\Detours\detours.cpp" />
     <ClCompile Include="..\ThirdParty\Detours\disasm.cpp" />
     <ClCompile Include="..\ThirdParty\Detours\modules.cpp" />
+    <ClCompile Include="autorep.cpp" />
     <ClCompile Include="crashfixer.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="helper.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="windowfixer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="autorep.h" />
     <ClInclude Include="crashfixer.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="hook.h" />

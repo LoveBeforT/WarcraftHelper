@@ -51,6 +51,9 @@
     <ClCompile Include="crashfixer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="autorep.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="helper.h">
@@ -75,6 +78,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="windowfixer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="autorep.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
