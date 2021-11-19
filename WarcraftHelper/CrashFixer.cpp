@@ -9,7 +9,7 @@ int __fastcall UnknowFunc(DWORD ecx, DWORD edx) {
 	try {
 		result = orgUnknowFunc(ecx, edx);
 	} catch (...) {
-		exit(0);
+		// exit(0);
 	}
 	return result;
 }
