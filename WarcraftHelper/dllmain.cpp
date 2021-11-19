@@ -16,6 +16,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			auto h = &Helper();
 			h->Start();
 		}
+		DisableThreadLibraryCalls(hModule);
 		break;
     case DLL_PROCESS_DETACH:
         break;

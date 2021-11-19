@@ -8,3 +8,13 @@ void Hook(void* pOldFuncAddr, void* pNewFuncAddr)
 	DetourAttach(&(void*&)pOldFuncAddr, pNewFuncAddr);
 	DetourTransactionCommit();
 }
+
+void InlineHook(void* pOldFuncAddr, void* pNewFuncAddr, void*& pCallBackFuncAddr)
+{
+	DetourTransactionBegin();
+	DetourUpdateThread(GetCurrentThread());
+	DetourAttach(&(void*&)pOldFuncAddr, pNewFuncAddr);
+	DetourTransactionCommit();
+	pCallBackFuncAddr = pOldFuncAddr;
+}
+

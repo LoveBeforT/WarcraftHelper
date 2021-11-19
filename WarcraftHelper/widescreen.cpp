@@ -74,6 +74,9 @@ WideScreen::WideScreen(DWORD base, Version version)
 }
 
 void WideScreen::Start() {
+	if (this->m_Hooked) {
+		return;
+	}
 	if (!this->m_GamedllBase) {
 		MessageBox(0, "GameDll≥ı ºªØ ß∞‹", "WideScreen", 0);
 		return;

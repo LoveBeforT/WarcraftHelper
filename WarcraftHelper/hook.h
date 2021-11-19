@@ -4,3 +4,4 @@
 #include <stdint.h>
 
 void Hook(void* pOldFuncAddr, void* pNewFuncAddr);
+void InlineHook(void* pOldFuncAddr, void* pNewFuncAddr, void*& pCallBackFuncAddr);
