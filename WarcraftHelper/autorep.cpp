@@ -28,7 +28,7 @@ void AutoRep::Start(DWORD m_GamedllBase, Version m_War3Version) {
 		return;
 	}
 	if (!m_GamedllBase) {
-		MessageBox(0, "GameDll初始化失败", "CrashFixer", 0);
+		MessageBox(0, "GameDll初始化失败", "AutoRep", 0);
 		return;
 	}
 	DWORD SaveRep_addr = m_GamedllBase;
