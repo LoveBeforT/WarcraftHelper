@@ -163,15 +163,16 @@
     <ClCompile Include="..\ThirdParty\Detours\detours.cpp" />
     <ClCompile Include="..\ThirdParty\Detours\disasm.cpp" />
     <ClCompile Include="..\ThirdParty\Detours\modules.cpp" />
-    <ClCompile Include="CrashFixer.cpp" />
+    <ClCompile Include="crashfixer.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="helper.cpp" />
     <ClCompile Include="hook.cpp" />
     <ClCompile Include="sizebypass.cpp" />
     <ClCompile Include="unlockfps.cpp" />
+    <ClCompile Include="windowfixer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CrashFixer.h" />
+    <ClInclude Include="crashfixer.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="hook.h" />
     <ClInclude Include="sizebypass.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="version.h" />
     <ClCompile Include="widescreen.cpp" />
     <ClInclude Include="widescreen.h" />
+    <ClInclude Include="windowfixer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

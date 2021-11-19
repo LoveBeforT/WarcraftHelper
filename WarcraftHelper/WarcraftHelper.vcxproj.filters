@@ -45,7 +45,10 @@
     <ClCompile Include="..\ThirdParty\Detours\disasm.cpp">
       <Filter>Detours</Filter>
     </ClCompile>
-    <ClCompile Include="CrashFixer.cpp">
+    <ClCompile Include="windowfixer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="crashfixer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,7 +71,10 @@
     <ClInclude Include="hook.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CrashFixer.h">
+    <ClInclude Include="crashfixer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="windowfixer.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
