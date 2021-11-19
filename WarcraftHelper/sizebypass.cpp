@@ -6,6 +6,7 @@
 #pragma comment(lib, "Psapi.lib")
 #define BUFSIZE 512
 
+bool SizeBypass_Hooked = false;
 Version sizebypass_war3version;
 DWORD(__stdcall * p_orgGetFileSize) (HANDLE file, LPDWORD lpFileSizeHigh);
 
@@ -130,28 +131,22 @@ DWORD  __stdcall myGetFileSize(HANDLE file, LPDWORD lpFileSizeHigh)
 	return retval;
 }
 
-SizeBypass::SizeBypass(DWORD base, Version version)
-	:m_GamedllBase(base),m_War3Version(version),m_Hooked(false)
-{
-	sizebypass_war3version = version;
-	this->m_kernel = GetModuleHandle("Kernel32.dll");
-}
-
-void SizeBypass::Start() {
-	if (this->m_Hooked) {
+void SizeBypass::Start(DWORD m_GamedllBase, Version m_War3Version) {
+	if (SizeBypass_Hooked) {
 		return;
 	}
-	if (!this->m_kernel) {
+	HMODULE m_kernel = GetModuleHandle("Kernel32.dll");
+	if (!m_kernel) {
 		MessageBox(0, "kernel32初始化失败", "SizeBypass", 0);
 		return;
 	}
-	DWORD GetFileSize_addr = (DWORD)GetProcAddress(this->m_kernel, "GetFileSize");
+	DWORD GetFileSize_addr = (DWORD)GetProcAddress(m_kernel, "GetFileSize");
 	if (!GetFileSize_addr) {
 		MessageBox(0, "GetFileSize初始化失败", "SizeBypass", 0);
 		return;
 	}
 	InlineHook((void*)GetFileSize_addr, myGetFileSize,(void*&)p_orgGetFileSize);
-	this->m_Hooked = true;
+	SizeBypass_Hooked = true;
 }
 
 void SizeBypass::Stop() {

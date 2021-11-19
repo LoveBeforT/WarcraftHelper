@@ -26,18 +26,19 @@ Helper::Helper() {
 	// 获取游戏版本
 	this->m_War3Version = GetWar3Version();
 
-	this->m_SizeBypass = &SizeBypass(this->m_GamedllBase, this->m_War3Version);
-	this->m_WideScreen = &WideScreen(this->m_GamedllBase, this->m_War3Version);
-	this->m_UnlockFPS = &UnlockFPS(this->m_GamedllBase, this->m_War3Version);
+	this->m_SizeBypass = &SizeBypass();
+	this->m_WideScreen = &WideScreen();
+	this->m_UnlockFPS = &UnlockFPS();
 }
 
 void Helper::Start() {
 	if (!this->IsWar3()) {
 		return;
 	}
-	this->m_SizeBypass->Start();
-	this->m_WideScreen->Start();
-	this->m_UnlockFPS->Start();
+
+	this->m_SizeBypass->Start(this->m_GamedllBase, this->m_War3Version);
+	this->m_WideScreen->Start(this->m_GamedllBase, this->m_War3Version);
+	this->m_UnlockFPS->Start(this->m_GamedllBase, this->m_War3Version);
 }
 
 void Helper::Stop() {

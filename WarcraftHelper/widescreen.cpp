@@ -2,6 +2,7 @@
 #include <iostream>
 #include <process.h>
 
+bool WideScreen_Hooked = false;
 HWND g_hWnd = NULL;
 
 struct handle_data {
@@ -67,26 +68,21 @@ void __fastcall CreateMatrixPerspectiveFov(uint32_t outMatrix, uint32_t unused, 
 	((float*)outMatrix)[15] = 0.0f;
 }
 
-WideScreen::WideScreen(DWORD base, Version version)
-	:m_GamedllBase(base), m_War3Version(version), m_Hooked(false)
-{
-	g_hWnd = GetActiveWindow();
-}
-
-void WideScreen::Start() {
-	if (this->m_Hooked) {
+void WideScreen::Start(DWORD m_GamedllBase, Version m_War3Version) {
+	if (WideScreen_Hooked) {
 		return;
 	}
-	if (!this->m_GamedllBase) {
+	if (!m_GamedllBase) {
 		MessageBox(0, "GameDll初始化失败", "WideScreen", 0);
 		return;
 	}
+	g_hWnd = GetActiveWindow();
 	if (!g_hWnd) {
 		MessageBox(0, "War3窗口获取失败", "WideScreen", 0);
 		return;
 	}
 	DWORD offset = 0;
-	switch (this->m_War3Version) {
+	switch (m_War3Version) {
 	case Version::v120e:
 		offset = 0x0DBD40;
 		break;
@@ -99,8 +95,8 @@ void WideScreen::Start() {
 	default:
 		return;
 	}
-	Hook((void*)(offset + this->m_GamedllBase), CreateMatrixPerspectiveFov);
-	this->m_Hooked = true;
+	Hook((void*)(offset + m_GamedllBase), CreateMatrixPerspectiveFov);
+	WideScreen_Hooked = true;
 }
 
 void WideScreen::Stop() {
