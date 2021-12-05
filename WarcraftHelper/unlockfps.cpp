@@ -37,8 +37,8 @@ void UnlockFPS::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	memset(&dm, 0, sizeof(DEVMODE));
 	dm.dmSize = sizeof(DEVMODE);
 	dm.dmDriverExtra = 0;
-	EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &dm);
-	if (dm.dmDisplayFrequency) {
+	EnumDisplaySettings(NULL, ENUM_REGISTRY_SETTINGS, &dm);
+	if (dm.dmDisplayFrequency > 60) {
 		WriteDwordToReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Video", "refreshrate", dm.dmDisplayFrequency);
 	}
 
