@@ -168,6 +168,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="helper.cpp" />
     <ClCompile Include="hook.cpp" />
+    <ClCompile Include="showfps.cpp" />
     <ClCompile Include="sizebypass.cpp" />
     <ClCompile Include="unlockfps.cpp" />
     <ClCompile Include="windowfixer.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="crashfixer.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="hook.h" />
+    <ClInclude Include="showfps.h" />
     <ClInclude Include="sizebypass.h" />
     <ClInclude Include="unlockfps.h" />
     <ClInclude Include="version.h" />

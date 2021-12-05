@@ -6,6 +6,7 @@
 #include "CrashFixer.h"
 #include "windowfixer.h"
 #include "autorep.h"
+#include "showfps.h"
 
 class Helper {
 public:
@@ -23,6 +24,7 @@ private:
 	CrashFixer *m_CrashFixer;
 	WindowFixer *m_WindowFixer;
 	AutoRep *m_AutoRep;
+	ShowFPS* m_ShowFPS;
 
 	bool IsWar3();
 };
