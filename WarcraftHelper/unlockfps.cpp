@@ -32,6 +32,16 @@ void UnlockFPS::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	default:
 		return;
 	}
+
+	DEVMODE dm;
+	memset(&dm, 0, sizeof(DEVMODE));
+	dm.dmSize = sizeof(DEVMODE);
+	dm.dmDriverExtra = 0;
+	EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &dm);
+	if (dm.dmDisplayFrequency) {
+		WriteDwordToReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Video", "refreshrate", dm.dmDisplayFrequency);
+	}
+
 	unsigned char bytes[] = { 0xFF };
 	PatchMemory(addr, bytes, 1);
 	UnlockFPS_Hooked = true;

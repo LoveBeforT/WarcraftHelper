@@ -51,3 +51,43 @@ DWORD War3_Search(void* pPattern, DWORD dwPatternLen, DWORD dwSearchStart, DWORD
 	}
 	return 0;
 }
+
+DWORD ReadDwordFromReg(LPCTSTR regPath, LPCTSTR keyName)
+{
+	HKEY hKey = 0;
+	long lret = ::RegOpenKeyEx(HKEY_CURRENT_USER, regPath, 0, KEY_ALL_ACCESS, &hKey);
+	if (lret == ERROR_SUCCESS)
+	{
+		DWORD value;
+		DWORD dwType = REG_DWORD;
+		DWORD dwSize = sizeof(DWORD);
+
+		lret = ::RegQueryValueEx(hKey, keyName, 0, &dwType, (BYTE*)&value, &dwSize);
+		if ((lret == ERROR_SUCCESS) && (dwType == REG_DWORD))
+		{
+			::RegCloseKey(hKey);
+			return value;
+		}
+		::RegCloseKey(hKey);
+	}
+
+	return 0;
+}
+
+BOOL WriteDwordToReg(LPCTSTR regPath, LPCTSTR keyName, DWORD value)
+{
+	HKEY hKey = 0;
+	long lret = ::RegCreateKey(HKEY_CURRENT_USER, regPath, &hKey);
+	if (lret == ERROR_SUCCESS)
+	{
+		lret = ::RegSetValueEx(hKey, keyName, 0, REG_DWORD, (BYTE*)&value, sizeof(DWORD));
+		if (lret == ERROR_SUCCESS)
+		{
+			::RegCloseKey(hKey);
+			return TRUE;
+		}
+		::RegCloseKey(hKey);
+	}
+
+	return FALSE;
+}
