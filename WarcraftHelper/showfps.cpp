@@ -2,6 +2,9 @@
 
 bool ShowFPS_Patched = false;
 
+ShowFPS::ShowFPS() {}
+ShowFPS::~ShowFPS() {}
+
 void ShowFPS::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	if (ShowFPS_Patched) {
 		return;

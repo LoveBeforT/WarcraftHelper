@@ -28,10 +28,13 @@ DWORD __stdcall Listen(LPVOID lpThreadParameter) {
 	return 0;
 }
 
+WindowFixer::WindowFixer() {}
+WindowFixer::~WindowFixer() {}
+
 void WindowFixer::Start() {
-	CreateThread(NULL, NULL, Listen, NULL, NULL, NULL);
+	this->thread = CreateThread(NULL, NULL, Listen, NULL, NULL, NULL);
 }
 
 void WindowFixer::Stop() {
-
+	TerminateThread(this->thread, 0);
 }

@@ -18,45 +18,47 @@ Version GetWar3Version() {
 }
 
 Helper::Helper() {
-	if (!this->IsWar3()) {
+	this->m_IsWar3 = this->IsWar3();
+	if (!this->m_IsWar3) {
 		return;
 	}
 	// 获取GameDll
-	this->m_GamedllBase = (DWORD)LoadLibraryA("Game.dll");
+	this->m_GamedllBase = (DWORD)GetModuleHandle("Game.dll");
 	// 获取游戏版本
 	this->m_War3Version = GetWar3Version();
 
 	this->m_SizeBypass = &SizeBypass();
 	this->m_WideScreen = &WideScreen();
 	this->m_UnlockFPS = &UnlockFPS();
-	this->m_CrashFixer = &CrashFixer();
 	this->m_WindowFixer = &WindowFixer();
 	this->m_AutoRep = &AutoRep();
 	this->m_ShowFPS = &ShowFPS();
 }
 
+Helper::~Helper() {
+}
+
 void Helper::Start() {
-	if (!this->IsWar3()) {
+	if (!this->m_IsWar3) {
 		return;
 	}
 
 	this->m_SizeBypass->Start(this->m_GamedllBase, this->m_War3Version);
 	this->m_WideScreen->Start(this->m_GamedllBase, this->m_War3Version);
 	this->m_UnlockFPS->Start(this->m_GamedllBase, this->m_War3Version);
-	this->m_CrashFixer->Start(this->m_GamedllBase, this->m_War3Version);
 	this->m_WindowFixer->Start();
 	this->m_AutoRep->Start(this->m_GamedllBase, this->m_War3Version);
 	this->m_ShowFPS->Start(this->m_GamedllBase, this->m_War3Version);
 }
 
 void Helper::Stop() {
-	if (!this->IsWar3()) {
+	if (!this->m_IsWar3) {
 		return;
 	}
+
 	this->m_SizeBypass->Stop();
 	this->m_WideScreen->Stop();
 	this->m_UnlockFPS->Stop();
-	this->m_CrashFixer->Stop();
 	this->m_WindowFixer->Stop();
 	this->m_AutoRep->Stop();
 	this->m_ShowFPS->Stop();

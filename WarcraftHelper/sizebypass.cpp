@@ -131,6 +131,9 @@ DWORD  __stdcall myGetFileSize(HANDLE file, LPDWORD lpFileSizeHigh)
 	return retval;
 }
 
+SizeBypass::SizeBypass() {}
+SizeBypass::~SizeBypass() {}
+
 void SizeBypass::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	if (SizeBypass_Hooked) {
 		return;

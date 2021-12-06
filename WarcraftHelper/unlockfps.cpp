@@ -3,6 +3,9 @@
 
 bool UnlockFPS_Hooked = false;
 
+UnlockFPS::UnlockFPS() {}
+UnlockFPS::~UnlockFPS() {}
+
 void UnlockFPS::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	if (UnlockFPS_Hooked) {
 		return;

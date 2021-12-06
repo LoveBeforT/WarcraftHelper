@@ -23,6 +23,9 @@ int __fastcall SaveRep(DWORD pthis, DWORD unused, const char* path) {
 	return orgSaveRep(pthis, unused, path);
 }
 
+AutoRep::AutoRep() {}
+AutoRep::~AutoRep() {}
+
 void AutoRep::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	if (AutoRep_Hooked) {
 		return;

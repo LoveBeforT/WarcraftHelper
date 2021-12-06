@@ -68,6 +68,9 @@ void __fastcall CreateMatrixPerspectiveFov(uint32_t outMatrix, uint32_t unused, 
 	((float*)outMatrix)[15] = 0.0f;
 }
 
+WideScreen::WideScreen() {}
+WideScreen::~WideScreen() {}
+
 void WideScreen::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	if (WideScreen_Hooked) {
 		return;

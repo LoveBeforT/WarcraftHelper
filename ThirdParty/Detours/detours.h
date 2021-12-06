@@ -2,7 +2,7 @@
 //
 //  Core Detours Functionality (detours.h of detours.lib)
 //
-//  Microsoft Research Detours Package, Version 3.0 Build_343.
+//  Microsoft Research Detours Package, Version 4.0.1
 //
 //  Copyright (c) Microsoft Corporation.  All rights reserved.
 //
@@ -11,7 +11,35 @@
 #ifndef _DETOURS_H_
 #define _DETOURS_H_
 
-#define DETOURS_VERSION     30001   // 3.00.01
+#define DETOURS_VERSION     0x4c0c1   // 0xMAJORcMINORcPATCH
+
+//////////////////////////////////////////////////////////////////////////////
+//
+
+#ifdef DETOURS_INTERNAL
+
+#define _CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS 1
+#define _ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE 1
+
+#pragma warning(disable:4068) // unknown pragma (suppress)
+
+#if _MSC_VER >= 1900
+#pragma warning(push)
+#pragma warning(disable:4091) // empty typedef
+#endif
+
+#include <windows.h>
+#if (_MSC_VER < 1310)
+#else
+#pragma warning(push)
+#if _MSC_VER > 1400
+#pragma warning(disable:6102 6103) // /analyze warnings
+#endif
+#include <strsafe.h>
+#pragma warning(pop)
+#endif
+
+#endif // DETOURS_INTERNAL
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -377,15 +405,34 @@ typedef struct _DETOUR_EXE_RESTORE
 
     IMAGE_DOS_HEADER    idh;
     union {
-        IMAGE_NT_HEADERS    inh;
+        IMAGE_NT_HEADERS    inh;        // all environments have this
+#ifdef IMAGE_NT_OPTIONAL_HDR32_MAGIC    // some environments do not have this
         IMAGE_NT_HEADERS32  inh32;
+#endif
+#ifdef IMAGE_NT_OPTIONAL_HDR64_MAGIC    // some environments do not have this
         IMAGE_NT_HEADERS64  inh64;
+#endif
+#ifdef IMAGE_NT_OPTIONAL_HDR64_MAGIC    // some environments do not have this
         BYTE                raw[sizeof(IMAGE_NT_HEADERS64) +
                                 sizeof(IMAGE_SECTION_HEADER) * 32];
+#else
+        BYTE                raw[0x108 + sizeof(IMAGE_SECTION_HEADER) * 32];
+#endif
     };
     DETOUR_CLR_HEADER   clr;
 
 } DETOUR_EXE_RESTORE, *PDETOUR_EXE_RESTORE;
+
+#ifdef IMAGE_NT_OPTIONAL_HDR64_MAGIC
+C_ASSERT(sizeof(IMAGE_NT_HEADERS64) == 0x108);
+#endif
+
+// The size can change, but assert for clarity due to the muddying #ifdefs.
+#ifdef _WIN64
+C_ASSERT(sizeof(DETOUR_EXE_RESTORE) == 0x688);
+#else
+C_ASSERT(sizeof(DETOUR_EXE_RESTORE) == 0x678);
+#endif
 
 typedef struct _DETOUR_EXE_HELPER
 {
@@ -507,6 +554,8 @@ PVOID WINAPI DetourCopyInstruction(_In_opt_ PVOID pDst,
                                    _Out_opt_ LONG *plExtra);
 BOOL WINAPI DetourSetCodeModule(_In_ HMODULE hModule,
                                 _In_ BOOL fLimitReferencesToModule);
+PVOID WINAPI DetourAllocateRegionWithinJumpBounds(_In_ LPCVOID pbTarget,
+                                                  _Out_ PDWORD pcbAllocatedSize);
 
 ///////////////////////////////////////////////////// Loaded Binary Functions.
 //
