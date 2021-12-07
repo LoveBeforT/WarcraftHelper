@@ -64,30 +64,32 @@ char * GetFileNameFromHandle(HANDLE hFile)
 	TCHAR* p = szTemp;
 	do
 	{
-		// Copy the drive letter to the template string
 		*szDrive = *p;
-		// Look up each device name
-		if (QueryDosDevice(szDrive, szName, MAX_PATH))
+		if (!QueryDosDevice(szDrive, szName, MAX_PATH))
 		{
-			size_t uNameLen = strlen(szName);
-			if (uNameLen < MAX_PATH)
-			{
-				bFound = strnicmp(pszFilename, szName, uNameLen) == 0
-					&& *(pszFilename + uNameLen) == ('\\');
-				if (bFound)
-				{
-					// Reconstruct pszFilename using szTempFile
-					// Replace device path with DOS path
-					TCHAR szTempFile[MAX_PATH];
-					StringCchPrintf(szTempFile,
-						MAX_PATH,
-						TEXT("%s%s"),
-						szDrive,
-						pszFilename + uNameLen);
-					StringCchCopyN(pszFilename, MAX_PATH + 1, szTempFile, strlen(szTempFile));
-				}
-			}
+			while (*p++);
+			continue;
 		}
+		size_t uNameLen = strlen(szName);
+		if (uNameLen >= MAX_PATH)
+		{
+			while (*p++);
+			continue;
+		}
+		bFound = strnicmp(pszFilename, szName, uNameLen) == 0
+			&& *(pszFilename + uNameLen) == ('\\');
+		if (!bFound)
+		{
+			while (*p++);
+			continue;
+		}
+		TCHAR szTempFile[MAX_PATH];
+		StringCchPrintf(szTempFile,
+			MAX_PATH,
+			TEXT("%s%s"),
+			szDrive,
+			pszFilename + uNameLen);
+		StringCchCopyN(pszFilename, MAX_PATH + 1, szTempFile, strlen(szTempFile));
 		while (*p++);
 	} while (!bFound && *p);
 	UnmapViewOfFile(pMem);
@@ -110,22 +112,18 @@ DWORD  __stdcall myGetFileSize(HANDLE file, LPDWORD lpFileSizeHigh)
 		return retval;
 	}
 	int strlenx = strlen(filenamex);
-	if (strlenx > 5 && IsMapFile(filenamex[strlenx - 4], filenamex[strlenx - 3], filenamex[strlenx - 2], filenamex[strlenx - 1]))
+	if (!(strlenx > 5 && IsMapFile(filenamex[strlenx - 4], filenamex[strlenx - 3], filenamex[strlenx - 2], filenamex[strlenx - 1])))
 	{
-		if (sizebypass_war3version >= Version::v124a)
-		{
-			if (retval > 0x7FFFFF)
-			{
-				retval = 0x7FFFFF;
-			}
-		}
-		else
-		{
-			if (retval > 0x2FFFFF)
-			{
-				retval = 0x2FFFFF;
-			}
-		}
+		delete[] filenamex;
+		return retval;
+	}
+	if (sizebypass_war3version >= Version::v124a && retval > 0x7FFFFF)
+	{
+		retval = 0x7FFFFF;
+	}
+	else if (sizebypass_war3version < Version::v124a && retval > 0x2FFFFF)
+	{
+		retval = 0x2FFFFF;
 	}
 	delete[] filenamex;
 	return retval;
