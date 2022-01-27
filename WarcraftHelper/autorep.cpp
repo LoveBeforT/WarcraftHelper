@@ -3,8 +3,10 @@
 #include <iostream>
 
 bool AutoRep_Hooked = false;
+DWORD SaveRep_addr = 0;
 
-int(__fastcall *orgSaveRep)(DWORD pthis, DWORD unused, const char* path);
+
+int(__fastcall *orgSaveRep)(DWORD pthis, DWORD unused, const char* path) = 0;
 
 int __fastcall SaveRep(DWORD pthis, DWORD unused, const char* path) {
 	DWORD len = strlen(path);
@@ -34,16 +36,15 @@ void AutoRep::Start(DWORD m_GamedllBase, Version m_War3Version) {
 		MessageBox(0, "GameDll≥ı ºªØ ß∞‹", "AutoRep", 0);
 		return;
 	}
-	DWORD SaveRep_addr = m_GamedllBase;
 	switch (m_War3Version) {
 	case Version::v120e:
-		SaveRep_addr += 0x28D320;
+		SaveRep_addr = m_GamedllBase + 0x28D320;
 		break;
 	case Version::v124e:
-		SaveRep_addr += 0x53EE60;
+		SaveRep_addr = m_GamedllBase + 0x53EE60;
 		break;
 	case Version::v127a:
-		SaveRep_addr += 0x3122C0;
+		SaveRep_addr = m_GamedllBase + 0x3122C0;
 		break;
 	default:
 		return;
@@ -53,5 +54,5 @@ void AutoRep::Start(DWORD m_GamedllBase, Version m_War3Version) {
 }
 
 void AutoRep::Stop() {
-
+	DetachHook((void*)orgSaveRep, SaveRep);
 }

@@ -6,9 +6,10 @@
 #pragma comment(lib, "Psapi.lib")
 #define BUFSIZE 512
 
-bool SizeBypass_Hooked = false;
+bool SizeBypass_Hooked = false; 
+DWORD GetFileSize_addr = 0;
 Version sizebypass_war3version;
-DWORD(__stdcall * p_orgGetFileSize) (HANDLE file, LPDWORD lpFileSizeHigh);
+DWORD(__stdcall * p_orgGetFileSize) (HANDLE file, LPDWORD lpFileSizeHigh) = 0;
 
 BOOL IsMapFile(char x1, char x2, char x3, char x4)
 {
@@ -141,7 +142,7 @@ void SizeBypass::Start(DWORD m_GamedllBase, Version m_War3Version) {
 		MessageBox(0, "kernel32初始化失败", "SizeBypass", 0);
 		return;
 	}
-	DWORD GetFileSize_addr = (DWORD)GetProcAddress(m_kernel, "GetFileSize");
+	GetFileSize_addr = (DWORD)GetProcAddress(m_kernel, "GetFileSize");
 	if (!GetFileSize_addr) {
 		MessageBox(0, "GetFileSize初始化失败", "SizeBypass", 0);
 		return;
@@ -151,5 +152,5 @@ void SizeBypass::Start(DWORD m_GamedllBase, Version m_War3Version) {
 }
 
 void SizeBypass::Stop() {
-
+	DetachHook((void*)p_orgGetFileSize, myGetFileSize);
 }

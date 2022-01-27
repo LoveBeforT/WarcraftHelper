@@ -3,6 +3,9 @@
 
 void Hook(void* pOldFuncAddr, void* pNewFuncAddr)
 {
+	if (!pOldFuncAddr) {
+		return;
+	}
 	DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
 	DetourAttach(&(void*&)pOldFuncAddr, pNewFuncAddr);
@@ -11,11 +14,25 @@ void Hook(void* pOldFuncAddr, void* pNewFuncAddr)
 
 void InlineHook(void* pOldFuncAddr, void* pNewFuncAddr, void*& pCallBackFuncAddr)
 {
+	if (!pOldFuncAddr) {
+		return;
+	}
 	DetourTransactionBegin();
 	DetourUpdateThread(GetCurrentThread());
 	DetourAttach(&(void*&)pOldFuncAddr, pNewFuncAddr);
 	DetourTransactionCommit();
 	pCallBackFuncAddr = pOldFuncAddr;
+}
+
+void DetachHook(void* pOldFuncAddr, void* pNewFuncAddr)
+{
+	if (!pOldFuncAddr) {
+		return;
+	}
+	DetourTransactionBegin();
+	DetourUpdateThread(GetCurrentThread());
+	DetourDetach(&(void*&)pOldFuncAddr, pNewFuncAddr);
+	DetourTransactionCommit();
 }
 
 void PatchMemory(uintptr_t pAddress, unsigned char* bytes, uint32_t size)
