@@ -10,6 +10,7 @@ void UnlockFPS::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	if (UnlockFPS_Hooked) {
 		return;
 	}
+	UnlockFPS_Hooked = true;
 	DWORD addr = m_GamedllBase;
 	DWORD war3_addr = 0;
 	byte SetFPS_pattern[] = {
@@ -47,7 +48,6 @@ void UnlockFPS::Start(DWORD m_GamedllBase, Version m_War3Version) {
 
 	unsigned char bytes[] = { 0xFF };
 	PatchMemory(addr, bytes, 1);
-	UnlockFPS_Hooked = true;
 }
 
 void UnlockFPS::Stop() {

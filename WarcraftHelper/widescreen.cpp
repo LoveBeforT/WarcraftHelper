@@ -36,6 +36,7 @@ HWND FindMainWindow(unsigned long process_id)
 	return data.best_handle;
 }
 
+void(__fastcall* p_orgCreateMatrixPerspectiveFov) (uint32_t outMatrix, uint32_t unused, float fovY, float aspectRatio, float nearZ, float farZ) = 0;
 void __fastcall CreateMatrixPerspectiveFov(uint32_t outMatrix, uint32_t unused, float fovY, float aspectRatio, float nearZ, float farZ)
 {
 	RECT r;
@@ -75,6 +76,7 @@ void WideScreen::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	if (WideScreen_Hooked) {
 		return;
 	}
+	WideScreen_Hooked = true;
 	if (!m_GamedllBase) {
 		MessageBox(0, "GameDll≥ı ºªØ ß∞‹", "WideScreen", 0);
 		return;
@@ -98,11 +100,10 @@ void WideScreen::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	default:
 		return;
 	}
-	Hook((void*)offset, CreateMatrixPerspectiveFov);
-	WideScreen_Hooked = true;
+	InlineHook((void*)offset, CreateMatrixPerspectiveFov, (void*&)p_orgCreateMatrixPerspectiveFov);
 }
 
 void WideScreen::Stop() {
-
+	DetachHook((void*)p_orgCreateMatrixPerspectiveFov, CreateMatrixPerspectiveFov);
 }
 

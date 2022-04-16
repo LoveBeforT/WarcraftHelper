@@ -9,6 +9,7 @@ void ShowFPS::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	if (ShowFPS_Patched) {
 		return;
 	}
+	ShowFPS_Patched = true;
 	if (!m_GamedllBase) {
 		MessageBox(0, "GameDll≥ı ºªØ ß∞‹", "CrashFixer", 0);
 		return;
@@ -33,7 +34,6 @@ void ShowFPS::Start(DWORD m_GamedllBase, Version m_War3Version) {
 
 	unsigned char bytes[] = { 0x01 };
 	PatchMemory(offset, bytes,1);
-	ShowFPS_Patched = true;
 }
 
 void ShowFPS::Stop() {

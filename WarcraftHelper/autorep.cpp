@@ -32,6 +32,7 @@ void AutoRep::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	if (AutoRep_Hooked) {
 		return;
 	}
+	AutoRep_Hooked = true;
 	if (!m_GamedllBase) {
 		MessageBox(0, "GameDll≥ı ºªØ ß∞‹", "AutoRep", 0);
 		return;
@@ -50,7 +51,6 @@ void AutoRep::Start(DWORD m_GamedllBase, Version m_War3Version) {
 		return;
 	}
 	InlineHook((void*)SaveRep_addr, SaveRep, (void*&)orgSaveRep);
-	AutoRep_Hooked = true;
 }
 
 void AutoRep::Stop() {
