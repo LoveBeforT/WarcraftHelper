@@ -10,3 +10,4 @@ DWORD War3_Search(void* pPattern, DWORD dwPatternLen, DWORD dwSearchStart, DWORD
 DWORD ReadDwordFromReg(LPCTSTR regPath, LPCTSTR keyName);
 BOOL WriteDwordToReg(LPCTSTR regPath, LPCTSTR keyName, DWORD value);
 void DetachHook(void* pOldFuncAddr, void* pNewFuncAddr);
+void WriteNOP(void* pAddress, DWORD dwCount);

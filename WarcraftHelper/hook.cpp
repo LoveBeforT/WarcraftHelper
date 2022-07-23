@@ -37,12 +37,32 @@ void DetachHook(void* pOldFuncAddr, void* pNewFuncAddr)
 
 void PatchMemory(uintptr_t pAddress, unsigned char* bytes, uint32_t size)
 {
+	if (!pAddress) {
+		return;
+	}
+
 	void* address = reinterpret_cast<void*>(pAddress);
 
 	unsigned long Protection;
 	VirtualProtect(address, size, PAGE_READWRITE, &Protection);
 	memcpy(address, (const void*)bytes, size);
 	VirtualProtect(address, size, Protection, &Protection);
+}
+
+void WriteNOP(void* pAddress, DWORD dwCount)
+{
+	if (!pAddress) {
+		return;
+	}
+	static DWORD dwProtect;
+
+	if (VirtualProtect(pAddress, dwCount, PAGE_EXECUTE_READWRITE, &dwProtect))
+	{
+		for (DWORD i = 0; i < dwCount; i++)
+			*(BYTE*)((DWORD)pAddress + i) = 0x90;
+
+		VirtualProtect(pAddress, dwCount, dwProtect, &dwProtect);
+	}
 }
 
 DWORD War3_Search(void* pPattern, DWORD dwPatternLen, DWORD dwSearchStart, DWORD dwSearchEnd)
