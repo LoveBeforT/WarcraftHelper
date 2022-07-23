@@ -42,6 +42,9 @@
     <ClCompile Include="showfps.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="pathfix.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="helper.h">
@@ -69,6 +72,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="showfps.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="pathfix.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

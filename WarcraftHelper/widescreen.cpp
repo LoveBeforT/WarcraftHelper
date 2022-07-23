@@ -78,12 +78,12 @@ void WideScreen::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	}
 	WideScreen_Hooked = true;
 	if (!m_GamedllBase) {
-		MessageBox(0, "GameDll初始化失败", "WideScreen", 0);
+		MessageBoxA(0, "GameDll初始化失败", "WideScreen", 0);
 		return;
 	}
 	g_hWnd = GetActiveWindow();
 	if (!g_hWnd) {
-		MessageBox(0, "War3窗口获取失败", "WideScreen", 0);
+		MessageBoxA(0, "War3窗口获取失败", "WideScreen", 0);
 		return;
 	}
 	DWORD offset = m_GamedllBase;

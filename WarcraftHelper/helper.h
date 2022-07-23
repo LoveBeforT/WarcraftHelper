@@ -6,6 +6,7 @@
 #include "windowfixer.h"
 #include "autorep.h"
 #include "showfps.h"
+#include "pathfix.h"
 
 class Helper {
 public:
@@ -25,6 +26,7 @@ private:
 	WindowFixer *m_WindowFixer;
 	AutoRep *m_AutoRep;
 	ShowFPS* m_ShowFPS;
+	PathFix* m_PathFix;
 
 	bool IsWar3();
 };

@@ -11,7 +11,7 @@ void ShowFPS::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	}
 	ShowFPS_Patched = true;
 	if (!m_GamedllBase) {
-		MessageBox(0, "GameDll初始化失败", "CrashFixer", 0);
+		MessageBoxA(0, "GameDll初始化失败", "CrashFixer", 0);
 		return;
 	}
 	DWORD offset = m_GamedllBase;
