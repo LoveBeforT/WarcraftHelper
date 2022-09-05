@@ -1,28 +1,36 @@
 #include "showhpbar.h"
+#include <iostream>
 
 bool ShowHPBar_Patched = false;
 bool ShowHPBar_Closed = false;
-DWORD is_chat_addr = 0x45CB8C;
+DWORD *is_chat_addr = (DWORD*)0x45CB8C;
+DWORD game_status = 0;
+
+int(__fastcall* orgSetGameStatus)(DWORD *ecx, DWORD edx, DWORD status) = 0;
+int __fastcall SetGameStatus(DWORD *ecx, DWORD edx, DWORD status) {
+	DWORD ret = orgSetGameStatus(ecx, edx, status);
+	game_status = ecx[156];
+	return ret;
+}
 
 DWORD __stdcall ShowBar(LPVOID lpThreadParameter) {
-	HWND h_war3 = FindWindow(0, "Warcraft III");
 	while (1)
 	{
 		if (ShowHPBar_Closed) {
 			ExitThread(0);
 		}
-		if (*(DWORD*)is_chat_addr) {
+		if (IsBadReadPtr(is_chat_addr, 4)) {
+			break;
+		}
+		if (*is_chat_addr) {
+			continue;
+		}
+		if (game_status != 4) {
 			continue;
 		}
 		keybd_event(219, 0, 0, 0);
 		keybd_event(221, 0, 0, 0);
-		Sleep(500);
-
-		/* PostMessage(h_war3, WM_KEYDOWN, 219, 0);
-		 PostMessage(h_war3, WM_KEYDOWN, 221, 0);
-
-		 PostMessage(h_war3, WM_KEYUP, 219, 0);
-		 PostMessage(h_war3, WM_KEYUP, 221, 0);*/
+		Sleep(50);
 	}
 	return 0;
 }
@@ -39,8 +47,10 @@ void ShowHPBar::Start(DWORD m_GamedllBase, Version m_War3Version) {
 		MessageBoxA(0, "GameDll³õÊ¼»¯Ê§°Ü", "ShowHPBar", 0);
 		return;
 	}
+	DWORD SetGameStatus_addr = 0;
 	switch (m_War3Version) {
 	case Version::v120e:
+		SetGameStatus_addr = 0x6F283B60;
 		break;
 	default:
 		return;
@@ -53,11 +63,10 @@ void ShowHPBar::Start(DWORD m_GamedllBase, Version m_War3Version) {
 		return;
 	}
 	this->thread = CreateThread(NULL, NULL, ShowBar, NULL, NULL, NULL);
+	InlineHook((void*)SetGameStatus_addr, SetGameStatus, (void*&)orgSetGameStatus);
 }
 
 void ShowHPBar::Stop() {
 	ShowHPBar_Closed = true;
-	Sleep(51);
-	keybd_event(219, 0, 2, 0);
-	keybd_event(221, 0, 2, 0);
+	DetachHook((void*)orgSetGameStatus, SetGameStatus);
 }

@@ -68,6 +68,7 @@ void Helper::Stop() {
 	this->m_ShowFPS->Stop();
 	this->m_PathFix->Stop();
 	this->m_ShowHPBar->Stop();
+	Sleep(60);
 }
 
 bool Helper::IsWar3() {

@@ -40,5 +40,4 @@ void WindowFixer::Start() {
 
 void WindowFixer::Stop() {
 	t_closed = true;
-	Sleep(51);
 }
