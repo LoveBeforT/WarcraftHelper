@@ -7,6 +7,8 @@
 #include "autorep.h"
 #include "showfps.h"
 #include "pathfix.h"
+#include "showhpbar.h"
+
 
 class Helper {
 public:
@@ -27,6 +29,7 @@ private:
 	AutoRep *m_AutoRep;
 	ShowFPS* m_ShowFPS;
 	PathFix* m_PathFix;
+	ShowHPBar* m_ShowHPBar;
 
 	bool IsWar3();
 };

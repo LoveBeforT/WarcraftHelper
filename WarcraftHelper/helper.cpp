@@ -34,6 +34,7 @@ Helper::Helper() {
 	this->m_AutoRep = &AutoRep();
 	this->m_ShowFPS = &ShowFPS();
 	this->m_PathFix = &PathFix();
+	this->m_ShowHPBar = &ShowHPBar();
 }
 
 Helper::~Helper() {
@@ -51,6 +52,7 @@ void Helper::Start() {
 	this->m_AutoRep->Start(this->m_GamedllBase, this->m_War3Version);
 	this->m_ShowFPS->Start(this->m_GamedllBase, this->m_War3Version);
 	this->m_PathFix->Start(this->m_GamedllBase, this->m_War3Version);
+	this->m_ShowHPBar->Start(this->m_GamedllBase, this->m_War3Version);
 }
 
 void Helper::Stop() {
@@ -65,6 +67,7 @@ void Helper::Stop() {
 	this->m_AutoRep->Stop();
 	this->m_ShowFPS->Stop();
 	this->m_PathFix->Stop();
+	this->m_ShowHPBar->Stop();
 }
 
 bool Helper::IsWar3() {

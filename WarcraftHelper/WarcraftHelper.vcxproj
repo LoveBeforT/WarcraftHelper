@@ -170,6 +170,7 @@
     <ClCompile Include="hook.cpp" />
     <ClCompile Include="pathfix.cpp" />
     <ClCompile Include="showfps.cpp" />
+    <ClCompile Include="showhpbar.cpp" />
     <ClCompile Include="sizebypass.cpp" />
     <ClCompile Include="unlockfps.cpp" />
     <ClCompile Include="windowfixer.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="hook.h" />
     <ClInclude Include="pathfix.h" />
     <ClInclude Include="showfps.h" />
+    <ClInclude Include="showhpbar.h" />
     <ClInclude Include="sizebypass.h" />
     <ClInclude Include="unlockfps.h" />
     <ClInclude Include="version.h" />
