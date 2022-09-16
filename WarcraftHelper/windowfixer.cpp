@@ -21,9 +21,9 @@ DWORD __stdcall Listen(LPVOID lpThreadParameter) {
 				RECT rect;
 				GetWindowRect(target, &rect);
 				// 重新设置窗口大小
-				MoveWindow(target, rect.left, rect.top, rect.right - rect.left-1, rect.bottom - rect.top, true);
+				MoveWindow(target, rect.left, rect.top, rect.right - rect.left + 1, rect.bottom - rect.top, false);
 				// 恢复窗口大小
-				MoveWindow(target, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, true);
+				MoveWindow(target, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, false);
 			}
 		}
 		Sleep(50);

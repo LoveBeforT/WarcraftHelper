@@ -8,9 +8,10 @@ DWORD PathCopy_addr = 0;
 DWORD PathCopy_size = 0;
 
 int(__fastcall* orgGetPathName)(char*, DWORD, DWORD, float, char*, int) = 0;
-int __fastcall GetPathName(char* nameGB2312, DWORD edx, DWORD unk00, float unk01, char* dst, int unk02) {
+int __fastcall GetPathName(char* nameGB2312, DWORD edx, DWORD unk00, float unk01, char* dst, int dst_len) {
 	dst[0] = 0;
-	DWORD rst =  orgGetPathName(nameGB2312, edx, unk00, unk01, dst, unk02);
+	DWORD rst =  orgGetPathName(nameGB2312, edx, unk00, unk01, dst, dst_len);
+
 	if (dst) {
 		if (!strncmp(dst, "...", 3) || dst[0] == 0) {
 			int len = MultiByteToWideChar(CP_ACP, 0, nameGB2312, -1, NULL, 0);
@@ -21,6 +22,8 @@ int __fastcall GetPathName(char* nameGB2312, DWORD edx, DWORD unk00, float unk01
 			WideCharToMultiByte(CP_UTF8, 0, wstr, -1, dst, len, NULL, NULL);
 			if (wstr) delete[] wstr;
 		}
+		DWORD len = strlen(dst);
+		printf("map: %s len:%d\n", dst, len);
 	}
 
 	return rst;

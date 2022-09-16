@@ -34,3 +34,4 @@ private:
 	bool IsWar3();
 };
 
+bool InitConsole();

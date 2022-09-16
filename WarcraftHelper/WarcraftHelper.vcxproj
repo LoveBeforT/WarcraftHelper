@@ -75,6 +75,8 @@
     <TargetExt>.mix</TargetExt>
     <IncludePath>../ThirdParty/Detours;$(IncludePath)</IncludePath>
     <LibraryPath>../ThirdParty/Detours;$(VC_LibraryPath_x86);$(WindowsSdk_71A_LibraryPath_x86);</LibraryPath>
+    <IntDir>$(SolutionDir)/build/temp/$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)/build/$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -85,6 +87,8 @@
     <IncludePath>../ThirdParty/Detours;C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Include;$(IncludePath)</IncludePath>
     <LibraryPath>../ThirdParty/Detours;$(VC_LibraryPath_x86);$(WindowsSdk_71A_LibraryPath_x86);C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Lib</LibraryPath>
     <ExecutablePath>C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin;$(ExecutablePath)</ExecutablePath>
+    <IntDir>$(SolutionDir)/build/temp/$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)/build/$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
