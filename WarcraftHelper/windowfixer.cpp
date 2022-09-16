@@ -40,4 +40,5 @@ void WindowFixer::Start() {
 
 void WindowFixer::Stop() {
 	t_closed = true;
+	TerminateThread(this->thread, 0);
 }

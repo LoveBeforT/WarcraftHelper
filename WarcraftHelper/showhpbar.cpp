@@ -69,4 +69,5 @@ void ShowHPBar::Start(DWORD m_GamedllBase, Version m_War3Version) {
 void ShowHPBar::Stop() {
 	ShowHPBar_Closed = true;
 	DetachHook((void*)orgSetGameStatus, SetGameStatus);
+	TerminateThread(this->thread, 0);
 }

@@ -9,6 +9,6 @@ public:
 	void Start();
 	void Stop();
 private:
-	HANDLE thread;
+	HANDLE thread = 0;
 };
 
