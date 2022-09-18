@@ -5,37 +5,6 @@
 bool WideScreen_Hooked = false;
 HWND g_hWnd = NULL;
 
-struct handle_data {
-	unsigned long process_id;
-	HWND best_handle;
-};
-
-BOOL IsMainWindow(HWND handle)
-{
-	return GetWindow(handle, GW_OWNER) == (HWND)0 && IsWindowVisible(handle);
-}
-
-BOOL CALLBACK EnumWindowsCallback(HWND handle, LPARAM lParam)
-{
-	handle_data& data = *(handle_data*)lParam;
-	unsigned long process_id = 0;
-	GetWindowThreadProcessId(handle, &process_id);
-	if (data.process_id != process_id || !IsMainWindow(handle)) {
-		return TRUE;
-	}
-	data.best_handle = handle;
-	return FALSE;
-}
-
-HWND FindMainWindow(unsigned long process_id)
-{
-	handle_data data;
-	data.process_id = process_id;
-	data.best_handle = 0;
-	EnumWindows(EnumWindowsCallback, (LPARAM)&data);
-	return data.best_handle;
-}
-
 void(__fastcall* p_orgCreateMatrixPerspectiveFov) (uint32_t outMatrix, uint32_t unused, float fovY, float aspectRatio, float nearZ, float farZ) = 0;
 void __fastcall CreateMatrixPerspectiveFov(uint32_t outMatrix, uint32_t unused, float fovY, float aspectRatio, float nearZ, float farZ)
 {
@@ -86,6 +55,17 @@ void WideScreen::Start(DWORD m_GamedllBase, Version m_War3Version) {
 		MessageBoxA(0, "War3窗口获取失败", "WideScreen", 0);
 		return;
 	}
+	// 设置全屏
+	DWORD auto_fullscreem = ReadDwordFromReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Video", "autofullscreen");
+	WriteDwordToReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Video", "autofullscreen", auto_fullscreem);
+	if (auto_fullscreem) {
+		int w = GetSystemMetrics(SM_CXSCREEN);
+		int h = GetSystemMetrics(SM_CYSCREEN);
+		DWORD last_style = GetWindowLong(g_hWnd, GWL_STYLE);
+		SetWindowLongPtr(g_hWnd, GWL_STYLE, last_style ^ 0xCF0000);
+		SetWindowPos(g_hWnd, NULL, 0, 0, w, h, SWP_NOZORDER);
+	}
+	// 设置宽屏
 	DWORD offset = m_GamedllBase;
 	switch (m_War3Version) {
 	case Version::v120e:

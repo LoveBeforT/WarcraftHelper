@@ -57,9 +57,9 @@ void ShowHPBar::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	}
 
 
-	DWORD is_showfps = ReadDwordFromReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Gameplay", "healthbars");
-	WriteDwordToReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Gameplay", "healthbars", is_showfps);
-	if (!is_showfps) {
+	DWORD is_showhp = ReadDwordFromReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Gameplay", "healthbars");
+	WriteDwordToReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Gameplay", "healthbars", is_showhp);
+	if (!is_showhp) {
 		return;
 	}
 	this->thread = CreateThread(NULL, NULL, ShowBar, NULL, NULL, NULL);
