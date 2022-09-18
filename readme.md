@@ -1,5 +1,11 @@
 # WarcraftHelper
 
+**其他推荐的项目**：
+
+​	[经典版国服语音](https://github.com/LoveBeforT/war3-chinese-voice)
+
+​	[经典版重制开场动画](https://github.com/LoveBeforT/war3-reforged-movie)
+
 #### 介绍
 
 魔兽辅助插件，解除地图大小限制，宽屏支持，解锁FPS，自动保存录像，自动显示fps，最大刷新率修复，目录中文名修复(同时也修复了一些中文名字地图的显示BUG)，自动显血
