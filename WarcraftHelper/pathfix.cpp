@@ -19,6 +19,10 @@ int __fastcall GetPathName(char* nameGB2312, DWORD edx, DWORD unk00, float unk01
 			memset(wstr, 0, len + 1);
 			MultiByteToWideChar(CP_ACP, 0, nameGB2312, -1, wstr, len);
 			len = WideCharToMultiByte(CP_UTF8, 0, wstr, -1, NULL, 0, NULL, NULL);
+			if (len > dst_len) {
+				if (wstr) delete[] wstr;
+				return rst;
+			}
 			WideCharToMultiByte(CP_UTF8, 0, wstr, -1, dst, len, NULL, NULL);
 			if (wstr) delete[] wstr;
 		}
