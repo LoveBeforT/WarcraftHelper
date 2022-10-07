@@ -10,3 +10,4 @@ public:
 	void Stop();
 };
 
+static char* WarcraftRecordHeader = "Warcraft III recorded game";
