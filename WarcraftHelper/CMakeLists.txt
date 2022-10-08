@@ -9,7 +9,9 @@ link_directories(../ThirdParty/Detours)
 
 file(GLOB WH_SRCS "./*.cpp")
 
-add_library(WarcraftHelper SHARED ${WH_SRCS})
+file(GLOB WH_HEADERS "./*.h")
+
+add_library(WarcraftHelper SHARED ${WH_SRCS} ${WH_HEADERS})
 
 target_link_libraries(WarcraftHelper detours.lib)
 

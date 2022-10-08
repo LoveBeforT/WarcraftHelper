@@ -6,7 +6,7 @@ include_directories (
 
 file(GLOB WHLoader_SRCS "./*.cpp")
 
-add_library(WHLoader SHARED  ${WHLoader_SRCS})
+add_library(WHLoader SHARED ${WHLoader_SRCS})
 
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/../output)
 
