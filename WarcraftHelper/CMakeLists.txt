@@ -13,4 +13,4 @@ add_library(WarcraftHelper SHARED ${WH_SRCS})
 
 target_link_libraries(WarcraftHelper detours.lib)
 
-set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/output)
+set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/../output)

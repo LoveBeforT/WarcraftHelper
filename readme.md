@@ -56,6 +56,20 @@ HKEY_CURRENT_USER\\SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Gameplay
 
 
 
+#### 生成
+
+​	安装cmake，执行以下命令生成项目文件：
+
+```shell
+cmake . -A win32 -B build
+```
+
+​	生成好的项目文件在build目录下。
+
+​	编译好的文件在build/output目录下。
+
+
+
 #### 参考项目
 
 [YDWE](https://github.com/actboy168/YDWE)
