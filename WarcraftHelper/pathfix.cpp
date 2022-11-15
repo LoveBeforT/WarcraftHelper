@@ -42,7 +42,7 @@ void PathFix::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	}
 	PathFix_Hooked = true;
 	if (!m_GamedllBase) {
-		MessageBoxA(0, "GameDll初始化失败", "AutoRep", 0);
+		MessageBoxA(0, "GameDll初始化失败", "PathFix", 0);
 		return;
 	}
 	switch (m_War3Version) {

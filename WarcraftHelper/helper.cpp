@@ -18,7 +18,7 @@ Version GetWar3Version() {
 }
 
 Helper::Helper() {
-	this->m_IsWar3 = this->IsWar3();
+	this->m_IsWar3 = IsWar3();
 	if (!this->m_IsWar3) {
 		return;
 	}
@@ -47,15 +47,29 @@ void Helper::Start() {
 #ifdef DEBUG
 	InitConsole();
 #endif
+	/*
+	DWORD esiBak = 0;
+	DWORD ediBak = 0;
+	DWORD ebxBak = 0;
+	_asm {
+		mov esiBak, esi
+		mov ediBak, edi
+		mov ebxBak, ebx
+	}*/
+	this->m_UnlockFPS->Start(this->m_GamedllBase, this->m_War3Version);
+	/*_asm {
+		mov esi, esiBak
+		mov edi, ediBak
+		mov ebx, ebxBak
+	}*/
 
 	this->m_SizeBypass->Start(this->m_GamedllBase, this->m_War3Version);
 	this->m_WideScreen->Start(this->m_GamedllBase, this->m_War3Version);
-	this->m_UnlockFPS->Start(this->m_GamedllBase, this->m_War3Version);
-	this->m_WindowFixer->Start();
 	this->m_AutoRep->Start(this->m_GamedllBase, this->m_War3Version);
 	this->m_ShowFPS->Start(this->m_GamedllBase, this->m_War3Version);
 	this->m_PathFix->Start(this->m_GamedllBase, this->m_War3Version);
 	this->m_ShowHPBar->Start(this->m_GamedllBase, this->m_War3Version);
+	this->m_WindowFixer->Start();
 }
 
 void Helper::Stop() {
@@ -74,7 +88,7 @@ void Helper::Stop() {
 	Sleep(60);
 }
 
-bool Helper::IsWar3() {
+bool IsWar3() {
 	TCHAR lpFilePATH[MAX_PATH];
 	memset(lpFilePATH, 0, MAX_PATH * sizeof(TCHAR));
 	::GetModuleFileName(NULL, lpFilePATH, MAX_PATH);

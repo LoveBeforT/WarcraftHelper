@@ -5,6 +5,18 @@ extern HWND g_hWnd;
 
 #define IsKeyDown(VK_NAME) ((GetAsyncKeyState(VK_NAME) & 0x8000) ? true:false) 
 
+void ResetWindow(HWND target) {
+	if (!target) {
+		return;
+	}
+	RECT rect;
+	GetWindowRect(target, &rect);
+	// 重新设置窗口大小
+	MoveWindow(target, rect.left, rect.top, rect.right - rect.left + 1, rect.bottom - rect.top, false);
+	// 恢复窗口大小
+	MoveWindow(target, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, false);
+}
+
 DWORD __stdcall Listen(LPVOID lpThreadParameter) {
 	POINT point;        // 鼠标所在位置
 	HWND target;        // 目标窗口句柄
@@ -18,12 +30,7 @@ DWORD __stdcall Listen(LPVOID lpThreadParameter) {
 			GetCursorPos(&point);
 			target = WindowFromPoint(point);
 			if (target != NULL && target == g_hWnd) {
-				RECT rect;
-				GetWindowRect(target, &rect);
-				// 重新设置窗口大小
-				MoveWindow(target, rect.left, rect.top, rect.right - rect.left + 1, rect.bottom - rect.top, false);
-				// 恢复窗口大小
-				MoveWindow(target, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, false);
+				ResetWindow(target);
 			}
 		}
 		Sleep(50);

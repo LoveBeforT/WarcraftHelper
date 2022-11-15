@@ -31,7 +31,7 @@ private:
 	PathFix* m_PathFix;
 	ShowHPBar* m_ShowHPBar;
 
-	bool IsWar3();
 };
 
 bool InitConsole();
+bool IsWar3();
