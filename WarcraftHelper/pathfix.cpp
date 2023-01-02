@@ -2,7 +2,6 @@
 #include <time.h>
 #include <iostream>
 
-bool PathFix_Hooked = false;
 DWORD GetPathName_addr = 0;
 DWORD PathCopy_addr = 0;
 DWORD PathCopy_size = 0;
@@ -33,32 +32,34 @@ int __fastcall GetPathName(char* nameGB2312, DWORD edx, DWORD unk00, float unk01
 	return rst;
 }
 
-PathFix::PathFix() {}
-PathFix::~PathFix() {}
-
-void PathFix::Start(DWORD m_GamedllBase, Version m_War3Version) {
-	if (PathFix_Hooked) {
+void PathFix::Start() {
+	if (this->m_Hooked) {
 		return;
 	}
-	PathFix_Hooked = true;
-	if (!m_GamedllBase) {
+	this->m_Hooked = true;
+	if (!this->m_GamedllBase) {
 		MessageBoxA(0, "GameDll³õÊ¼»¯Ê§°Ü", "PathFix", 0);
 		return;
 	}
-	switch (m_War3Version) {
+	switch (this->m_War3Version) {
 	case Version::v120e:
-		GetPathName_addr = m_GamedllBase + 0x2603E0;
-		PathCopy_addr = m_GamedllBase + 0x260489;
+		GetPathName_addr = this->m_GamedllBase + 0x2603E0;
+		PathCopy_addr = this->m_GamedllBase + 0x260489;
 		PathCopy_size = 0x31;
 		break;
 	case Version::v124e:
-		GetPathName_addr = m_GamedllBase + 0x5BD690;
-		PathCopy_addr = m_GamedllBase + 0x5BD754;
+		GetPathName_addr = this->m_GamedllBase + 0x5BD690;
+		PathCopy_addr = this->m_GamedllBase + 0x5BD754;
 		PathCopy_size = 0x3B;
 		break;
 	case Version::v127a:
-		GetPathName_addr = m_GamedllBase + 0x2A2540;
-		PathCopy_addr = m_GamedllBase + 0x2A2619;
+		GetPathName_addr = this->m_GamedllBase + 0x2A2540;
+		PathCopy_addr = this->m_GamedllBase + 0x2A2619;
+		PathCopy_size = 0x35;
+		break;
+	case Version::v127b:
+		GetPathName_addr = this->m_GamedllBase + 0x2C0160;
+		PathCopy_addr = this->m_GamedllBase + 0x2C0239;
 		PathCopy_size = 0x35;
 		break;
 	default:

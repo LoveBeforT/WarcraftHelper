@@ -1,26 +1,24 @@
 #include "showfps.h"
 
-bool ShowFPS_Patched = false;
-
-ShowFPS::ShowFPS() {}
-ShowFPS::~ShowFPS() {}
-
-void ShowFPS::Start(DWORD m_GamedllBase, Version m_War3Version) {
-	if (ShowFPS_Patched) {
+void ShowFPS::Start() {
+	if (this->m_Hooked) {
 		return;
 	}
-	ShowFPS_Patched = true;
-	if (!m_GamedllBase) {
+	this->m_Hooked = true;
+	if (!this->m_GamedllBase) {
 		MessageBoxA(0, "GameDll³õÊ¼»¯Ê§°Ü", "ShowFPS", 0);
 		return;
 	}
-	DWORD offset = m_GamedllBase;
-	switch (m_War3Version) {
+	DWORD offset = this->m_GamedllBase;
+	switch (this->m_War3Version) {
 	case Version::v124e:
 		offset += 0x34B248;
 		break;
 	case Version::v127a:
 		offset += 0x397E5A;
+		break;
+	case Version::v127b:
+		offset += 0x3B55FA;
 		break;
 	default:
 		return;
@@ -36,6 +34,4 @@ void ShowFPS::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	PatchMemory(offset, bytes,1);
 }
 
-void ShowFPS::Stop() {
-
-}
+void ShowFPS::Stop() {}

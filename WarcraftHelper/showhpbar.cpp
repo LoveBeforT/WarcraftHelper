@@ -1,7 +1,6 @@
 #include "showhpbar.h"
 #include <iostream>
 
-bool ShowHPBar_Patched = false;
 bool ShowHPBar_Closed = false;
 DWORD *is_chat_addr = (DWORD*)0x45CB8C;
 DWORD game_status = 0;
@@ -35,15 +34,12 @@ DWORD __stdcall ShowBar(LPVOID lpThreadParameter) {
 	return 0;
 }
 
-ShowHPBar::ShowHPBar() {}
-ShowHPBar::~ShowHPBar() {}
-
-void ShowHPBar::Start(DWORD m_GamedllBase, Version m_War3Version) {
-	if (ShowHPBar_Patched) {
+void ShowHPBar::Start() {
+	if (this->m_Hooked) {
 		return;
 	}
-	ShowHPBar_Patched = true;
-	if (!m_GamedllBase) {
+	this->m_Hooked = true;
+	if (!this->m_GamedllBase) {
 		MessageBoxA(0, "GameDll≥ı ºªØ ß∞‹", "ShowHPBar", 0);
 		return;
 	}
@@ -55,7 +51,6 @@ void ShowHPBar::Start(DWORD m_GamedllBase, Version m_War3Version) {
 	default:
 		return;
 	}
-
 
 	DWORD is_showhp = ReadDwordFromReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Gameplay", "healthbars");
 	WriteDwordToReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Gameplay", "healthbars", is_showhp);

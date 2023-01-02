@@ -1,26 +1,13 @@
 #include "sizebypass.h"
-#include <Psapi.h>
-#include <array>
-#include <strsafe.h>
 
-#pragma comment(lib, "Psapi.lib")
-#define BUFSIZE 512
-
-bool SizeBypass_Hooked = false; 
-Version sizebypass_war3version;
-
-
-SizeBypass::SizeBypass() {}
-SizeBypass::~SizeBypass() {}
-
-void SizeBypass::Start(DWORD m_GamedllBase, Version m_War3Version) {
-	if (SizeBypass_Hooked) {
+void SizeBypass::Start() {
+	if (this->m_Hooked) {
 		return;
 	}
-	SizeBypass_Hooked = true;
-	DWORD addr1 = m_GamedllBase;
-	DWORD addr2 = m_GamedllBase;
-	DWORD addr3 = m_GamedllBase;
+	this->m_Hooked = true;
+	DWORD addr1 = this->m_GamedllBase;
+	DWORD addr2 = this->m_GamedllBase;
+	DWORD addr3 = this->m_GamedllBase;
 	DWORD bytes_size = 0;
 	switch (m_War3Version) {
 	case Version::v120e:
@@ -40,6 +27,12 @@ void SizeBypass::Start(DWORD m_GamedllBase, Version m_War3Version) {
 		bytes_size = 11;
 		addr2 += 0x85F9B6;
 		addr3 += 0x872666;
+		break;
+	case Version::v127b:
+		addr1 += 0x978E20;
+		bytes_size = 11;
+		addr2 += 0x9892A6;
+		addr3 += 0x99BF66;
 		break;
 	default:
 		return;

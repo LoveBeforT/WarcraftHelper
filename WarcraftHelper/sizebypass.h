@@ -2,12 +2,11 @@
 
 #include "hook.h"
 
-class SizeBypass {
+class SizeBypass :IHook {
 public:
-	SizeBypass();
-	~SizeBypass();
-
-	void Start(DWORD m_GamedllBase, Version m_War3Version);
-	void Stop();
+	SizeBypass() = default;
+	SizeBypass(DWORD gamedllBase, Version war3Version) : IHook(gamedllBase, war3Version) {};
+	virtual void Start();
+	virtual void Stop();
 };
 

@@ -2,11 +2,10 @@
 
 #include "hook.h"
 
-class WideScreen {
+class WideScreen : IHook {
 public:
-	WideScreen();
-	~WideScreen();
-	void Start(DWORD m_GamedllBase, Version m_War3Version);
-	void Stop();
+	WideScreen() = default;
+	WideScreen(DWORD gamedllBase, Version war3Version) : IHook(gamedllBase, war3Version) {};
+	virtual void Start();
+	virtual void Stop();
 };
-

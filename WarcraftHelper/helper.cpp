@@ -22,19 +22,21 @@ Helper::Helper() {
 	if (!this->m_IsWar3) {
 		return;
 	}
+	DWORD gamedll = (DWORD)GetModuleHandle("Game.dll");
+	Version gamedversion = GetWar3Version();
 	// 获取GameDll
-	this->m_GamedllBase = (DWORD)GetModuleHandle("Game.dll");
+	this->m_GamedllBase = gamedll;
 	// 获取游戏版本
-	this->m_War3Version = GetWar3Version();
+	this->m_War3Version = gamedversion;
 
-	this->m_SizeBypass = &SizeBypass();
-	this->m_WideScreen = &WideScreen();
-	this->m_UnlockFPS = &UnlockFPS();
-	this->m_WindowFixer = &WindowFixer();
-	this->m_AutoRep = &AutoRep();
-	this->m_ShowFPS = &ShowFPS();
-	this->m_PathFix = &PathFix();
-	this->m_ShowHPBar = &ShowHPBar();
+	this->m_SizeBypass = SizeBypass(gamedll, gamedversion);
+	this->m_WideScreen = WideScreen(gamedll, gamedversion);
+	this->m_UnlockFPS = UnlockFPS(gamedll, gamedversion);
+	this->m_WindowFixer = WindowFixer(gamedll, gamedversion);
+	this->m_AutoRep = AutoRep(gamedll, gamedversion);
+	this->m_ShowFPS = ShowFPS(gamedll, gamedversion);
+	this->m_PathFix = PathFix(gamedll, gamedversion);
+	this->m_ShowHPBar = ShowHPBar(gamedll, gamedversion);
 }
 
 Helper::~Helper() {
@@ -47,8 +49,8 @@ void Helper::Start() {
 #ifdef DEBUG
 	InitConsole();
 #endif
-	/*
-	DWORD esiBak = 0;
+	
+	/*DWORD esiBak = 0;
 	DWORD ediBak = 0;
 	DWORD ebxBak = 0;
 	_asm {
@@ -56,20 +58,22 @@ void Helper::Start() {
 		mov ediBak, edi
 		mov ebxBak, ebx
 	}*/
-	this->m_UnlockFPS->Start(this->m_GamedllBase, this->m_War3Version);
+	this->m_UnlockFPS.Start();
 	/*_asm {
 		mov esi, esiBak
 		mov edi, ediBak
 		mov ebx, ebxBak
 	}*/
 
-	this->m_SizeBypass->Start(this->m_GamedllBase, this->m_War3Version);
-	this->m_WideScreen->Start(this->m_GamedllBase, this->m_War3Version);
-	this->m_AutoRep->Start(this->m_GamedllBase, this->m_War3Version);
-	this->m_ShowFPS->Start(this->m_GamedllBase, this->m_War3Version);
-	this->m_PathFix->Start(this->m_GamedllBase, this->m_War3Version);
-	this->m_ShowHPBar->Start(this->m_GamedllBase, this->m_War3Version);
-	this->m_WindowFixer->Start();
+	this->m_SizeBypass.Start();
+	this->m_WideScreen.Start();
+	this->m_AutoRep.Start();
+	this->m_ShowFPS.Start();
+	this->m_PathFix.Start();
+	this->m_ShowHPBar.Start();
+	this->m_WindowFixer.Start();
+
+	this->LoadPlugins();
 }
 
 void Helper::Stop() {
@@ -77,14 +81,14 @@ void Helper::Stop() {
 		return;
 	}
 
-	this->m_SizeBypass->Stop();
-	this->m_WideScreen->Stop();
-	this->m_UnlockFPS->Stop();
-	this->m_WindowFixer->Stop();
-	this->m_AutoRep->Stop();
-	this->m_ShowFPS->Stop();
-	this->m_PathFix->Stop();
-	this->m_ShowHPBar->Stop();
+	this->m_SizeBypass.Stop();
+	this->m_WideScreen.Stop();
+	this->m_UnlockFPS.Stop();
+	this->m_WindowFixer.Stop();
+	this->m_AutoRep.Stop();
+	this->m_ShowFPS.Stop();
+	this->m_PathFix.Stop();
+	this->m_ShowHPBar.Stop();
 	Sleep(60);
 }
 
@@ -133,4 +137,12 @@ bool InitConsole()
 	ShowWindow(hwnd, SW_MINIMIZE);
 
 	return true;
+}
+
+void Helper::LoadPlugins() {
+	if (!this->m_GamedllBase) {
+		return;
+	}
+
+
 }

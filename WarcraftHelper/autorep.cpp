@@ -2,9 +2,6 @@
 #include <time.h>
 #include <iostream>
 
-bool AutoRep_Hooked = false;
-DWORD SaveRep_addr = 0;
-
 void CheckNwgReplay(char* nwgpath, char* reppath) {
 	// 判断文件是否存在
 	HANDLE hFile = CreateFileA(nwgpath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_READONLY, NULL);
@@ -91,27 +88,28 @@ int __fastcall SaveRep(DWORD pthis, DWORD unused, const char* path) {
 	return orgSaveRep(pthis, unused, path);
 }
 
-AutoRep::AutoRep() {}
-AutoRep::~AutoRep() {}
-
-void AutoRep::Start(DWORD m_GamedllBase, Version m_War3Version) {
-	if (AutoRep_Hooked) {
+void AutoRep::Start() {
+	if (this->m_Hooked) {
 		return;
 	}
-	AutoRep_Hooked = true;
-	if (!m_GamedllBase) {
+	this->m_Hooked = true;
+	if (!this->m_GamedllBase) {
 		MessageBox(0, "GameDll初始化失败", "AutoRep", 0);
 		return;
 	}
-	switch (m_War3Version) {
+	DWORD SaveRep_addr = 0;
+	switch (this->m_War3Version) {
 	case Version::v120e:
-		SaveRep_addr = m_GamedllBase + 0x28D320;
+		SaveRep_addr = this->m_GamedllBase + 0x28D320;
 		break;
 	case Version::v124e:
-		SaveRep_addr = m_GamedllBase + 0x53EE60;
+		SaveRep_addr = this->m_GamedllBase + 0x53EE60;
 		break;
 	case Version::v127a:
-		SaveRep_addr = m_GamedllBase + 0x3122C0;
+		SaveRep_addr = this->m_GamedllBase + 0x3122C0;
+		break;
+	case Version::v127b:
+		SaveRep_addr = this->m_GamedllBase + 0x32FA30;
 		break;
 	default:
 		return;

@@ -3,11 +3,11 @@
 
 #include "hook.h"
 
-class ShowHPBar {
+class ShowHPBar : IHook {
 public:
-	ShowHPBar();
-	~ShowHPBar();
-	void Start(DWORD m_GamedllBase, Version m_War3Version);
+	ShowHPBar() = default;
+	ShowHPBar(DWORD gamedllBase, Version war3Version) : IHook(gamedllBase, war3Version) {};
+	void Start();
 	void Stop();
 private:
 	HANDLE thread = 0;

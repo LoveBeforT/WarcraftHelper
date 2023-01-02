@@ -65,7 +65,7 @@ void WriteNOP(void* pAddress, DWORD dwCount)
 	}
 }
 
-DWORD War3_Search(void* pPattern, DWORD dwPatternLen, DWORD dwSearchStart, DWORD dwSearchEnd)
+DWORD War3Search(void* pPattern, DWORD dwPatternLen, DWORD dwSearchStart, DWORD dwSearchEnd)
 {
 	DWORD dwStartAddr = dwSearchStart;
 	DWORD dwEndAddr = dwSearchEnd - dwPatternLen;
@@ -127,4 +127,12 @@ BOOL WriteDwordToReg(LPCTSTR regPath, LPCTSTR keyName, DWORD value)
 	}
 
 	return FALSE;
+}
+
+HWND GetWar3Window() {
+	if (!g_hWnd) {
+		g_hWnd = GetActiveWindow();
+		return g_hWnd;
+	}
+	return g_hWnd;
 }

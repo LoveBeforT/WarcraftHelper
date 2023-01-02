@@ -2,19 +2,19 @@
 
 **其他推荐的项目**：
 
-​	[经典版国服语音](https://github.com/LoveBeforT/war3-chinese-voice)
+​	[重制版转经典版国服语音](https://github.com/LoveBeforT/war3-chinese-voice)
 
-​	[经典版重制开场动画](https://github.com/LoveBeforT/war3-reforged-movie)
+​	[重制版转经典版开场动画](https://github.com/LoveBeforT/war3-reforged-movie)
 
 #### 介绍
 
-魔兽辅助插件，解除地图大小限制，宽屏支持，解锁FPS，自动保存录像，自动显示fps，最大刷新率修复，目录中文名修复(同时也修复了一些中文名字地图的显示BUG)，自动显血
+魔兽辅助插件，解除地图大小限制，宽屏支持，解锁FPS，自动保存录像，自动显示fps，最大刷新率修复，目录中文名修复(同时也修复了一些中文名字地图的显示BUG)，自动显血。
 
 ![image-20220910193304584](./.image/pathfix.png)
 
-支持版本：1.20e、1.24e和1.27a
+支持版本：1.20e、1.24e、1.27a和1.27b
 
-| 特性             | 1.20e | 1.24e | 1.27a |
+| 特性             | 1.20e | 1.24e | 1.27a-1.27b |
 | ---------------- | ----- | ----- | ----- |
 | 解锁地图大小限制 | √     | √     | √     |
 | 宽屏             | √     | √     | √     |
@@ -26,7 +26,7 @@
 | 自动显血 | √ | 游戏自带 | 游戏自带 |
 | 字体重叠修复 | √ | √ | √ |
 
-使用方法：把zip压缩包解压后直接放到魔兽目录下，第一次运行使用窗口化模式启动魔兽争霸3，以便插件覆盖注册表中魔兽fps最大值数据。
+使用方法：把zip压缩包解压后直接放到魔兽目录下，第一次运行使用窗口化模式启动魔兽争霸3，以便插件覆盖注册表中魔兽fps最大值数据。强烈建议使用窗口化模式游玩魔兽。
 
 
 
@@ -58,7 +58,9 @@ HKEY_CURRENT_USER\\SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Gameplay
 
 #### 生成
 
-​	安装cmake，执行以下命令生成项目文件：
+​	安装cmake，vs2022。
+
+​	执行以下命令生成项目文件：
 
 ```shell
 cmake . -A win32 -B build

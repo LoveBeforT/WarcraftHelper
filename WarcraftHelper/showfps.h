@@ -2,11 +2,11 @@
 
 #include "hook.h"
 
-class ShowFPS {
+class ShowFPS : IHook {
 public:
-	ShowFPS();
-	~ShowFPS();
-	void Start(DWORD m_GamedllBase, Version m_War3Version);
+	ShowFPS() = default;
+	ShowFPS(DWORD gamedllBase, Version war3Version) : IHook(gamedllBase, war3Version) {};
+	void Start();
 	void Stop();
 };
 

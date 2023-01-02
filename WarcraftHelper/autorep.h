@@ -2,11 +2,11 @@
 
 #include "hook.h"
 
-class AutoRep {
+class AutoRep : IHook {
 public:
-	AutoRep();
-	~AutoRep();
-	void Start(DWORD m_GamedllBase, Version m_War3Version);
+	AutoRep() = default;
+	AutoRep(DWORD gamedllBase, Version war3Version) : IHook(gamedllBase, war3Version) {};
+	void Start();
 	void Stop();
 };
 

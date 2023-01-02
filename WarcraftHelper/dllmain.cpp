@@ -8,14 +8,15 @@ BOOL APIENTRY DllMain( HMODULE hModule,
                        LPVOID lpReserved
                      )
 {
-    auto h = &Helper();
+    Helper h = Helper();
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
-		h->Start();
+        DisableThreadLibraryCalls(hModule);
+		h.Start();
 		break;
     case DLL_PROCESS_DETACH:
-        h->Stop();
+        h.Stop();
         break;
     }
     return TRUE;

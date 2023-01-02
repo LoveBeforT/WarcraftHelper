@@ -1,7 +1,6 @@
 ﻿#include "windowfixer.h"
 
 bool t_closed = false;
-extern HWND g_hWnd;
 
 #define IsKeyDown(VK_NAME) ((GetAsyncKeyState(VK_NAME) & 0x8000) ? true:false) 
 
@@ -20,6 +19,7 @@ void ResetWindow(HWND target) {
 DWORD __stdcall Listen(LPVOID lpThreadParameter) {
 	POINT point;        // 鼠标所在位置
 	HWND target;        // 目标窗口句柄
+	HWND org = GetWar3Window();        // 原窗口句柄
 	while (1)
 	{
 		if (t_closed) {
@@ -29,7 +29,7 @@ DWORD __stdcall Listen(LPVOID lpThreadParameter) {
 		{
 			GetCursorPos(&point);
 			target = WindowFromPoint(point);
-			if (target != NULL && target == g_hWnd) {
+			if (target != NULL && target == org) {
 				ResetWindow(target);
 			}
 		}
@@ -37,9 +37,6 @@ DWORD __stdcall Listen(LPVOID lpThreadParameter) {
 	}
 	return 0;
 }
-
-WindowFixer::WindowFixer() {}
-WindowFixer::~WindowFixer() {}
 
 void WindowFixer::Start() {
 	this->thread = CreateThread(NULL, NULL, Listen, NULL, NULL, NULL);

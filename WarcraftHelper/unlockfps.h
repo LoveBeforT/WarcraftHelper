@@ -2,11 +2,14 @@
 
 #include "hook.h"
 
-class UnlockFPS {
+class UnlockFPS : IHook {
 public:
-	UnlockFPS();
-	~UnlockFPS();
-	void Start(DWORD m_GamedllBase, Version m_War3Version);
-	void Stop();
+	UnlockFPS() = default;
+	UnlockFPS(DWORD gamedllBase, Version war3Version) : IHook(gamedllBase, war3Version) {};
+	virtual void Start();
+	virtual void Stop();
+	virtual void ResetD3D();
+	virtual void ResetOpenGL();
+	virtual void WriteFPSLimit();
 };
 
