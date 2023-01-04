@@ -81,9 +81,9 @@ void Helper::Stop() {
 		return;
 	}
 
+	this->m_UnlockFPS.Stop();
 	this->m_SizeBypass.Stop();
 	this->m_WideScreen.Stop();
-	this->m_UnlockFPS.Stop();
 	this->m_WindowFixer.Stop();
 	this->m_AutoRep.Stop();
 	this->m_ShowFPS.Stop();

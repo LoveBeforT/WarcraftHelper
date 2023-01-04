@@ -260,6 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 
-d3d9
-dxsdk
 build

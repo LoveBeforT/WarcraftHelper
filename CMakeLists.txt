@@ -12,3 +12,4 @@ endif()
 
 add_subdirectory(WarcraftHelper)
 add_subdirectory(WHLoader)
+add_subdirectory(d3d9)
