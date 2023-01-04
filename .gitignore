@@ -16,7 +16,7 @@
 [Rr]elease/
 [Rr]eleases/
 x64/
-x86/
+x86/ !ThirdParty/dxsdk/lib/x86/
 bld/
 [Bb]in/
 [Oo]bj/
