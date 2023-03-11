@@ -14,6 +14,9 @@ void ShowFPS::Start() {
 	case Version::v124e:
 		offset += 0x34B248;
 		break;
+	case Version::v126a:
+		offset += 0x34A708;
+		break;
 	case Version::v127a:
 		offset += 0x397E5A;
 		break;

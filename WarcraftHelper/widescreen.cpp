@@ -68,6 +68,9 @@ void WideScreen::Start() {
 	case Version::v124e:
 		offset += 0x7B6E90;
 		break;
+	case Version::v126a:
+		offset += 0x7B66F0;
+		break;
 	case Version::v127a:
 		offset += 0x0D31D0;
 		break;

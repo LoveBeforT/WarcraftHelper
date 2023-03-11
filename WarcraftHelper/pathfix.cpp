@@ -52,6 +52,11 @@ void PathFix::Start() {
 		PathCopy_addr = this->m_GamedllBase + 0x5BD754;
 		PathCopy_size = 0x3B;
 		break;
+	case Version::v126a:
+		GetPathName_addr = this->m_GamedllBase + 0x5BCEF0;
+		PathCopy_addr = this->m_GamedllBase + 0x5BCFB4;
+		PathCopy_size = 0x3B;
+		break;
 	case Version::v127a:
 		GetPathName_addr = this->m_GamedllBase + 0x2A2540;
 		PathCopy_addr = this->m_GamedllBase + 0x2A2619;

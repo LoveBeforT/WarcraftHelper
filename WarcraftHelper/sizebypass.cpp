@@ -22,6 +22,12 @@ void SizeBypass::Start() {
 		addr2 += 0x66F51E;
 		addr3 += 0x67F400;
 		break;
+	case Version::v126a:
+		addr1 += 0x6577E3;
+		bytes_size = 11;
+		addr2 += 0x66ED7E;
+		addr3 += 0x67EC60;
+		break;
 	case Version::v127a:
 		addr1 += 0x84F530;
 		bytes_size = 11;

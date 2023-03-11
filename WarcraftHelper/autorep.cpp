@@ -105,6 +105,9 @@ void AutoRep::Start() {
 	case Version::v124e:
 		SaveRep_addr = this->m_GamedllBase + 0x53EE60;
 		break;
+	case Version::v126a:
+		SaveRep_addr = this->m_GamedllBase + 0x53E360;
+		break;
 	case Version::v127a:
 		SaveRep_addr = this->m_GamedllBase + 0x3122C0;
 		break;

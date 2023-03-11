@@ -54,6 +54,12 @@ void UnlockFPS::Start() {
 		addr += 0x62DF9B;
 		is_enable_d3d_addr = (DWORD*)(this->m_GamedllBase + 0xA9E764);
 		break;
+	case Version::v126a:
+		GetGameOpt = (DWORD(*)())(this->m_GamedllBase + 0x5720);
+		SetGameOptValue = (DWORD(__fastcall*)(DWORD, DWORD, DWORD, DWORD))(this->m_GamedllBase + 0x57F0);
+		addr += 0x62D7FB;
+		is_enable_d3d_addr = (DWORD*)(this->m_GamedllBase + 0xA88724);
+		break;
 	case Version::v127a:
 		GetGameOpt = (DWORD(*)())(this->m_GamedllBase + 0x23E00);
 		SetGameOptValue = (DWORD(__fastcall*)(DWORD, DWORD, DWORD, DWORD))(this->m_GamedllBase + 0x25A70);
