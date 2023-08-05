@@ -26,7 +26,9 @@ int __fastcall GetPathName(char* nameGB2312, DWORD edx, DWORD unk00, float unk01
 			if (wstr) delete[] wstr;
 		}
 		DWORD len = strlen(dst);
+#ifdef _DEBUG
 		printf("map: %s len:%d\n", dst, len);
+#endif
 	}
 
 	return rst;

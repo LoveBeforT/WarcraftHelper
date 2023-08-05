@@ -78,33 +78,33 @@ void UnlockFPS::Start() {
 		return;
 	}
 
-	// ½â³ı×¢²á±íÖĞµÄfpsÉÏÏŞ
+	// è§£é™¤æ³¨å†Œè¡¨ä¸­çš„fpsä¸Šé™
 	this->WriteFPSLimit();
 
-	// ½âËød3d
+	// è§£é”d3d
 	unsigned char bytes[] = { 0xFF };
 	PatchMemory(addr, bytes, 1);
 	InlineHook((void*)d3d9_addr, GetD3d9Parameters, (void*&)org_GetD3d9Parameters);
 
-	// d3dÖØÉè´°¿Ú
+	// d3dé‡è®¾çª—å£
 	if (d3d9_addr && is_enable_d3d_addr && *is_enable_d3d_addr) {
 		this->ResetD3D();
 	}
-	// openglÖØÉè
+	// openglé‡è®¾
 	if (is_enable_d3d_addr && !*is_enable_d3d_addr) {
 		this->ResetOpenGL();
 	}
 }
 
 void UnlockFPS::ResetD3D() {
-	// Ç¿ÖÆÓÎÏ·ÖØĞÂ¼ÓÔØd3d
+	// å¼ºåˆ¶æ¸¸æˆé‡æ–°åŠ è½½d3d
 	HWND target = GetWar3Window();
 	ShowWindow(target, SW_MINIMIZE);
 	ShowWindow(target, SW_SHOWNORMAL);
 }
 
 void UnlockFPS::ResetOpenGL() {
-	//// Ç¿ÖÆÓÎÏ·ÖØĞÂ¼ÓÔØopengl
+	//// å¼ºåˆ¶æ¸¸æˆé‡æ–°åŠ è½½opengl
 	//	HMODULE hOpengl = GetModuleHandle("opengl32.dll");
 	//	if (!hOpengl) {
 	//		return;
@@ -121,7 +121,7 @@ void UnlockFPS::ResetOpenGL() {
 }
 
 void UnlockFPS::WriteFPSLimit() {
-	// ĞŞ¸ÄÓÎÏ·Ë¢ĞÂÂÊÉÏÏŞ
+	// ä¿®æ”¹æ¸¸æˆåˆ·æ–°ç‡ä¸Šé™
 	DEVMODE dm;
 	memset(&dm, 0, sizeof(DEVMODE));
 	dm.dmSize = sizeof(DEVMODE);

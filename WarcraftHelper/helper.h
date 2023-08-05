@@ -8,6 +8,8 @@
 #include "showfps.h"
 #include "pathfix.h"
 #include "showhpbar.h"
+#include "campaignfix.h"
+#include "u9helper.h"
 
 
 class Helper {
@@ -31,7 +33,8 @@ private:
 	ShowFPS m_ShowFPS;
 	PathFix m_PathFix;
 	ShowHPBar m_ShowHPBar;
-
+	CampaignFix m_CampaignFix;
+	U9Helper m_U9Helper;
 };
 
 bool InitConsole();

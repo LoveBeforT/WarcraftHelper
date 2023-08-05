@@ -1,4 +1,4 @@
-#include "widescreen.h"
+ï»¿#include "widescreen.h"
 #include <iostream>
 #include <process.h>
 
@@ -41,15 +41,15 @@ void WideScreen::Start() {
 	}
 	this->m_Hooked = true;
 	if (!this->m_GamedllBase) {
-		MessageBoxA(0, "GameDll³õÊ¼»¯Ê§°Ü", "WideScreen", 0);
+		MessageBoxA(0, "GameDllåˆå§‹åŒ–å¤±è´¥", "WideScreen", 0);
 		return;
 	}
 	HWND hwar3 = GetWar3Window();
 	if (!hwar3) {
-		MessageBoxA(0, "War3´°¿Ú»ñÈ¡Ê§°Ü", "WideScreen", 0);
+		MessageBoxA(0, "War3çª—å£èŽ·å–å¤±è´¥", "WideScreen", 0);
 		return;
 	}
-	// ÉèÖÃÈ«ÆÁ
+	// è®¾ç½®å…¨å±
 	DWORD auto_fullscreen = ReadDwordFromReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Video", "autofullscreen");
 	WriteDwordToReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Video", "autofullscreen", auto_fullscreen);
 	if (auto_fullscreen) {
@@ -59,7 +59,7 @@ void WideScreen::Start() {
 		SetWindowLongPtr(hwar3, GWL_STYLE, last_style ^ 0xCF0000);
 		SetWindowPos(hwar3, NULL, 0, 0, w, h, SWP_NOZORDER);
 	}
-	// ÉèÖÃ¿íÆÁ
+	// è®¾ç½®å®½å±
 	DWORD offset = this->m_GamedllBase;
 	switch (this->m_War3Version) {
 	case Version::v120e:

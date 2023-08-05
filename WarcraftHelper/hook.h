@@ -4,6 +4,8 @@
 #include "version.h"
 #include <stdint.h>
 
+#define ERROR_GAMEDLL_INIT() {MessageBoxA(0, "GameDll was unable to init", "U9Helper", 0);}
+
 static HWND g_hWnd = NULL;
 
 void Hook(void* pOldFuncAddr, void* pNewFuncAddr);

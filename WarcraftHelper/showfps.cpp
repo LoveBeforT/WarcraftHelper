@@ -1,4 +1,4 @@
-#include "showfps.h"
+ï»¿#include "showfps.h"
 
 void ShowFPS::Start() {
 	if (this->m_Hooked) {
@@ -6,7 +6,7 @@ void ShowFPS::Start() {
 	}
 	this->m_Hooked = true;
 	if (!this->m_GamedllBase) {
-		MessageBoxA(0, "GameDll³õÊ¼»¯Ê§°Ü", "ShowFPS", 0);
+		MessageBoxA(0, "GameDllåˆå§‹åŒ–å¤±è´¥", "ShowFPS", 0);
 		return;
 	}
 	DWORD offset = this->m_GamedllBase;

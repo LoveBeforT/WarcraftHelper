@@ -1,4 +1,4 @@
-#include "helper.h"
+ï»¿#include "helper.h"
 #include <atlstr.h>
 
 #pragma comment(lib, "Version.lib")
@@ -24,9 +24,9 @@ Helper::Helper() {
 	}
 	DWORD gamedll = (DWORD)GetModuleHandle("Game.dll");
 	Version gamedversion = GetWar3Version();
-	// »ñÈ¡GameDll
+	// èŽ·å–GameDll
 	this->m_GamedllBase = gamedll;
-	// »ñÈ¡ÓÎÏ·°æ±¾
+	// èŽ·å–æ¸¸æˆç‰ˆæœ¬
 	this->m_War3Version = gamedversion;
 
 	this->m_SizeBypass = SizeBypass(gamedll, gamedversion);
@@ -37,6 +37,8 @@ Helper::Helper() {
 	this->m_ShowFPS = ShowFPS(gamedll, gamedversion);
 	this->m_PathFix = PathFix(gamedll, gamedversion);
 	this->m_ShowHPBar = ShowHPBar(gamedll, gamedversion);
+	this->m_CampaignFix = CampaignFix(gamedll, gamedversion);
+	this->m_U9Helper = U9Helper(gamedll, gamedversion);
 }
 
 Helper::~Helper() {
@@ -46,25 +48,11 @@ void Helper::Start() {
 	if (!this->m_IsWar3) {
 		return;
 	}
-#ifdef DEBUG
+#ifdef _DEBUG
 	InitConsole();
 #endif
 	
-	/*DWORD esiBak = 0;
-	DWORD ediBak = 0;
-	DWORD ebxBak = 0;
-	_asm {
-		mov esiBak, esi
-		mov ediBak, edi
-		mov ebxBak, ebx
-	}*/
 	this->m_UnlockFPS.Start();
-	/*_asm {
-		mov esi, esiBak
-		mov edi, ediBak
-		mov ebx, ebxBak
-	}*/
-
 	this->m_SizeBypass.Start();
 	this->m_WideScreen.Start();
 	this->m_AutoRep.Start();
@@ -72,6 +60,8 @@ void Helper::Start() {
 	this->m_PathFix.Start();
 	this->m_ShowHPBar.Start();
 	this->m_WindowFixer.Start();
+	this->m_CampaignFix.Start();
+	this->m_U9Helper.Start();
 
 	this->LoadPlugins();
 }
@@ -89,6 +79,8 @@ void Helper::Stop() {
 	this->m_ShowFPS.Stop();
 	this->m_PathFix.Stop();
 	this->m_ShowHPBar.Stop();
+	this->m_CampaignFix.Stop();
+	this->m_U9Helper.Stop();
 	Sleep(60);
 }
 

@@ -1,9 +1,9 @@
-#include "autorep.h"
+ï»¿#include "autorep.h"
 #include <time.h>
 #include <iostream>
 
 void CheckNwgReplay(char* nwgpath, char* reppath) {
-	// ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+	// åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
 	HANDLE hFile = CreateFileA(nwgpath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_READONLY, NULL);
 	DWORD err = GetLastError();
 	if (err == ERROR_FILE_NOT_FOUND || hFile == INVALID_HANDLE_VALUE)
@@ -11,7 +11,7 @@ void CheckNwgReplay(char* nwgpath, char* reppath) {
 		return;
 	}
 
-	// ¶ÁÈ¡ÎÄ¼ş
+	// è¯»å–æ–‡ä»¶
 	DWORD size = GetFileSize(hFile, NULL);
 	DWORD readed = 0;
 	char* nwg_data = new char[size];
@@ -25,7 +25,7 @@ void CheckNwgReplay(char* nwgpath, char* reppath) {
 		return;
 	}
 
-	// ²éÕÒµ½header
+	// æŸ¥æ‰¾åˆ°header
 	std::string buf(nwg_data, size);
 	std::string dest(WarcraftRecordHeader, strlen(WarcraftRecordHeader));
 	size_t pos = buf.find(dest);
@@ -34,7 +34,7 @@ void CheckNwgReplay(char* nwgpath, char* reppath) {
 		return;
 	}
 
-	// Ğ´ÈëÎÄ¼ş
+	// å†™å…¥æ–‡ä»¶
 	hFile = CreateFile(reppath, GENERIC_WRITE, 0, NULL, OPEN_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hFile == INVALID_HANDLE_VALUE ||
@@ -73,13 +73,13 @@ int __fastcall SaveRep(DWORD pthis, DWORD unused, const char* path) {
 		strcat(whpath, repname);
 		replen = strlen(whpath);
 		if (replen >= MAX_PATH) {
-			// Òç³öÁË
+			// æº¢å‡ºäº†
 			replen = MAX_PATH - 1;
 			whpath[replen] = 0;
 		}
 		ret = orgSaveRep(pthis, unused, whpath);
 
-		// Èç¹ûÊÇ¹Ù·½Æ½Ì¨£¬ÄÇÃ´Â¼Ïñ»á±ä³Énwg¸ñÊ½£¬ĞèÒª×ª»»³ÉÄ¬ÈÏµÄw3g
+		// å¦‚æœæ˜¯å®˜æ–¹å¹³å°ï¼Œé‚£ä¹ˆå½•åƒä¼šå˜æˆnwgæ ¼å¼ï¼Œéœ€è¦è½¬æ¢æˆé»˜è®¤çš„w3g
 		strncpy(nwgpath,whpath, replen-3);
 		strcat(nwgpath, "nwg");
 		CheckNwgReplay(nwgpath, whpath);
@@ -94,7 +94,7 @@ void AutoRep::Start() {
 	}
 	this->m_Hooked = true;
 	if (!this->m_GamedllBase) {
-		MessageBox(0, "GameDll³õÊ¼»¯Ê§°Ü", "AutoRep", 0);
+		MessageBox(0, "GameDllåˆå§‹åŒ–å¤±è´¥", "AutoRep", 0);
 		return;
 	}
 	DWORD SaveRep_addr = 0;

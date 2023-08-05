@@ -1,4 +1,4 @@
-#include "showhpbar.h"
+ï»¿#include "showhpbar.h"
 #include <iostream>
 
 bool ShowHPBar_Closed = false;
@@ -40,7 +40,7 @@ void ShowHPBar::Start() {
 	}
 	this->m_Hooked = true;
 	if (!this->m_GamedllBase) {
-		MessageBoxA(0, "GameDll³õÊ¼»¯Ê§°Ü", "ShowHPBar", 0);
+		MessageBoxA(0, "GameDllåˆå§‹åŒ–å¤±è´¥", "ShowHPBar", 0);
 		return;
 	}
 	DWORD SetGameStatus_addr = 0;
