@@ -29,7 +29,7 @@ void CampaignFix::Start() {
 	}
 	this->m_Hooked = true;
 	if (!this->m_GamedllBase) {
-		MessageBoxA(0, "GameDll初始化失败", "CampaignFix", 0);
+		ERROR_GAMEDLL_INIT();
 		return;
 	}
 	switch (this->m_War3Version) {

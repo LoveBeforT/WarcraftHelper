@@ -41,12 +41,12 @@ void WideScreen::Start() {
 	}
 	this->m_Hooked = true;
 	if (!this->m_GamedllBase) {
-		MessageBoxA(0, "GameDll初始化失败", "WideScreen", 0);
+		ERROR_GAMEDLL_INIT();
 		return;
 	}
 	HWND hwar3 = GetWar3Window();
 	if (!hwar3) {
-		MessageBoxA(0, "War3窗口获取失败", "WideScreen", 0);
+		ERROR_GAMEWINDOW_INIT();
 		return;
 	}
 	// 设置全屏

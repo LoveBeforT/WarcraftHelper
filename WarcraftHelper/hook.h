@@ -4,7 +4,8 @@
 #include "version.h"
 #include <stdint.h>
 
-#define ERROR_GAMEDLL_INIT() {MessageBoxA(0, "GameDll was unable to init", "U9Helper", 0);}
+#define ERROR_GAMEDLL_INIT() {MessageBoxA(0, "GameDll was unable to init", "WHelper", 0);}
+#define ERROR_GAMEWINDOW_INIT() {MessageBoxA(0, "War3 windows was unable to init", "WHelper", 0);}
 
 static HWND g_hWnd = NULL;
 

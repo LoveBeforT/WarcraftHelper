@@ -94,7 +94,7 @@ void AutoRep::Start() {
 	}
 	this->m_Hooked = true;
 	if (!this->m_GamedllBase) {
-		MessageBox(0, "GameDll初始化失败", "AutoRep", 0);
+		ERROR_GAMEDLL_INIT();
 		return;
 	}
 	DWORD SaveRep_addr = 0;

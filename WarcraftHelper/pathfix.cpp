@@ -1,4 +1,4 @@
-#include "pathfix.h"
+ï»¿#include "pathfix.h"
 #include <time.h>
 #include <iostream>
 
@@ -40,7 +40,7 @@ void PathFix::Start() {
 	}
 	this->m_Hooked = true;
 	if (!this->m_GamedllBase) {
-		MessageBoxA(0, "GameDll³õÊ¼»¯Ê§°Ü", "PathFix", 0);
+		ERROR_GAMEDLL_INIT();
 		return;
 	}
 	switch (this->m_War3Version) {

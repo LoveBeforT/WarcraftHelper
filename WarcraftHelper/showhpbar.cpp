@@ -40,7 +40,7 @@ void ShowHPBar::Start() {
 	}
 	this->m_Hooked = true;
 	if (!this->m_GamedllBase) {
-		MessageBoxA(0, "GameDll初始化失败", "ShowHPBar", 0);
+		ERROR_GAMEDLL_INIT();
 		return;
 	}
 	DWORD SetGameStatus_addr = 0;
