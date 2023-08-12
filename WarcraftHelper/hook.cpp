@@ -65,6 +65,21 @@ void WriteNOP(void* pAddress, DWORD dwCount)
 	}
 }
 
+void WriteByte(void* pAddress, BYTE data)
+{
+	if (!pAddress) {
+		return;
+	}
+	static DWORD dwProtect;
+
+	if (VirtualProtect(pAddress, 1, PAGE_EXECUTE_READWRITE, &dwProtect))
+	{
+		*(BYTE*)((DWORD)pAddress) = data;
+
+		VirtualProtect(pAddress, 1, dwProtect, &dwProtect);
+	}
+}
+
 DWORD War3Search(void* pPattern, DWORD dwPatternLen, DWORD dwSearchStart, DWORD dwSearchEnd)
 {
 	DWORD dwStartAddr = dwSearchStart;

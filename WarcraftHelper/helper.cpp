@@ -39,6 +39,7 @@ Helper::Helper() {
 	this->m_ShowHPBar = ShowHPBar(gamedll, gamedversion);
 	this->m_CampaignFix = CampaignFix(gamedll, gamedversion);
 	this->m_U9Helper = U9Helper(gamedll, gamedversion);
+	this->m_ReplayView = ReplayView(gamedll, gamedversion);
 }
 
 Helper::~Helper() {
@@ -62,6 +63,7 @@ void Helper::Start() {
 	this->m_WindowFixer.Start();
 	this->m_CampaignFix.Start();
 	this->m_U9Helper.Start();
+	this->m_ReplayView.Start();
 
 	this->LoadPlugins();
 }
@@ -81,6 +83,7 @@ void Helper::Stop() {
 	this->m_ShowHPBar.Stop();
 	this->m_CampaignFix.Stop();
 	this->m_U9Helper.Stop();
+	this->m_ReplayView.Stop();
 	Sleep(60);
 }
 

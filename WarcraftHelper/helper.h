@@ -10,6 +10,7 @@
 #include "showhpbar.h"
 #include "campaignfix.h"
 #include "u9helper.h"
+#include "replayview.h"
 
 
 class Helper {
@@ -35,6 +36,7 @@ private:
 	ShowHPBar m_ShowHPBar;
 	CampaignFix m_CampaignFix;
 	U9Helper m_U9Helper;
+	ReplayView m_ReplayView;
 };
 
 bool InitConsole();
