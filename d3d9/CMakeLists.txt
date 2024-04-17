@@ -2,10 +2,10 @@ project(d3d9)
 
 include_directories (
 	./
-	../ThirdParty/dxsdk
+	../3rd/dxsdk
 )
 
-link_directories(../ThirdParty/dxsdk/lib/x86)
+link_directories(../3rd/dxsdk/lib/x86)
 
 file(GLOB D3D9_SRCS "./*.cpp" "./*.def")
 

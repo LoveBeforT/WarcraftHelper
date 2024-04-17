@@ -23,11 +23,7 @@ DWORD __fastcall GetD3d9Parameters(DWORD pthis, DWORD unused, D3DPRESENT_PARAMET
 }
 
 void UnlockFPS::Start() {
-	if (this->m_Hooked) {
-		return;
-	}
-	this->m_Hooked = true;
-	DWORD addr = this->m_GamedllBase;
+	DWORD addr = GetGameInstance()->GetGameDllBase();
 	DWORD d3d9_addr = 0;
 	DWORD *is_enable_d3d_addr = 0;
 	DWORD war3_addr = 0;
@@ -36,43 +32,43 @@ void UnlockFPS::Start() {
 			0XBA, 0X11, 0X00, 0X00,
 			0X00, 0X8B, 0XCE, 0x00
 	};
-	switch (this->m_War3Version) {
+	switch (GetGameInstance()->GetGameVersion()) {
 	case Version::v120e:
 		war3_addr = (DWORD)GetModuleHandle("war3.exe");
-		addr = War3Search(SetFPS_pattern, 11, war3_addr + 0x3DA00, war3_addr+ 0x100000);
+		addr = GetGameInstance()->SearchPatterns(SetFPS_pattern, 11, war3_addr + 0x3DA00, war3_addr+ 0x100000);
 		if (!addr) {
 			return;
 		}
 		addr += 2;
-		GetGameOpt = (DWORD(*)())(this->m_GamedllBase + 0x2A50);
-		SetGameOptValue = (DWORD(__fastcall*)(DWORD, DWORD, DWORD, DWORD))(this->m_GamedllBase + 0x2CC0);
-		is_enable_d3d_addr = (DWORD*)(this->m_GamedllBase + 0x7FA744);
+		GetGameOpt = (DWORD(*)())(GetGameInstance()->GetGameDllBase() + 0x2A50);
+		SetGameOptValue = (DWORD(__fastcall*)(DWORD, DWORD, DWORD, DWORD))(GetGameInstance()->GetGameDllBase() + 0x2CC0);
+		is_enable_d3d_addr = (DWORD*)(GetGameInstance()->GetGameDllBase() + 0x7FA744);
 		break;
 	case Version::v124e:
-		GetGameOpt = (DWORD(*)())(this->m_GamedllBase + 0x5720);
-		SetGameOptValue = (DWORD(__fastcall*)(DWORD, DWORD, DWORD, DWORD))(this->m_GamedllBase + 0x57F0);
+		GetGameOpt = (DWORD(*)())(GetGameInstance()->GetGameDllBase() + 0x5720);
+		SetGameOptValue = (DWORD(__fastcall*)(DWORD, DWORD, DWORD, DWORD))(GetGameInstance()->GetGameDllBase() + 0x57F0);
 		addr += 0x62DF9B;
-		is_enable_d3d_addr = (DWORD*)(this->m_GamedllBase + 0xA9E764);
+		is_enable_d3d_addr = (DWORD*)(GetGameInstance()->GetGameDllBase() + 0xA9E764);
 		break;
 	case Version::v126a:
-		GetGameOpt = (DWORD(*)())(this->m_GamedllBase + 0x5720);
-		SetGameOptValue = (DWORD(__fastcall*)(DWORD, DWORD, DWORD, DWORD))(this->m_GamedllBase + 0x57F0);
+		GetGameOpt = (DWORD(*)())(GetGameInstance()->GetGameDllBase() + 0x5720);
+		SetGameOptValue = (DWORD(__fastcall*)(DWORD, DWORD, DWORD, DWORD))(GetGameInstance()->GetGameDllBase() + 0x57F0);
 		addr += 0x62D7FB;
-		is_enable_d3d_addr = (DWORD*)(this->m_GamedllBase + 0xA88724);
+		is_enable_d3d_addr = (DWORD*)(GetGameInstance()->GetGameDllBase() + 0xA88724);
 		break;
 	case Version::v127a:
-		GetGameOpt = (DWORD(*)())(this->m_GamedllBase + 0x23E00);
-		SetGameOptValue = (DWORD(__fastcall*)(DWORD, DWORD, DWORD, DWORD))(this->m_GamedllBase + 0x25A70);
+		GetGameOpt = (DWORD(*)())(GetGameInstance()->GetGameDllBase() + 0x23E00);
+		SetGameOptValue = (DWORD(__fastcall*)(DWORD, DWORD, DWORD, DWORD))(GetGameInstance()->GetGameDllBase() + 0x25A70);
 		addr += 0x5FCFB;
-		d3d9_addr = this->m_GamedllBase + 0xEC6B0;
-		is_enable_d3d_addr = (DWORD*)(this->m_GamedllBase + 0xB665C8);
+		d3d9_addr = GetGameInstance()->GetGameDllBase() + 0xEC6B0;
+		is_enable_d3d_addr = (DWORD*)(GetGameInstance()->GetGameDllBase() + 0xB665C8);
 		break;
 	case Version::v127b:
-		GetGameOpt = (DWORD(*)())(this->m_GamedllBase + 0x40ED0);
-		SetGameOptValue = (DWORD(__fastcall*)(DWORD, DWORD, DWORD, DWORD))(this->m_GamedllBase + 0x40FA0);
+		GetGameOpt = (DWORD(*)())(GetGameInstance()->GetGameDllBase() + 0x40ED0);
+		SetGameOptValue = (DWORD(__fastcall*)(DWORD, DWORD, DWORD, DWORD))(GetGameInstance()->GetGameDllBase() + 0x40FA0);
 		addr += 0x7B7AB;
-		d3d9_addr = this->m_GamedllBase + 0x13FED0;
-		is_enable_d3d_addr = (DWORD*)(this->m_GamedllBase + 0xCE3D50);
+		d3d9_addr = GetGameInstance()->GetGameDllBase() + 0x13FED0;
+		is_enable_d3d_addr = (DWORD*)(GetGameInstance()->GetGameDllBase() + 0xCE3D50);
 		break;
 	default:
 		return;
@@ -83,8 +79,8 @@ void UnlockFPS::Start() {
 
 	// 解锁d3d
 	unsigned char bytes[] = { 0xFF };
-	PatchMemory(addr, bytes, 1);
-	InlineHook((void*)d3d9_addr, GetD3d9Parameters, (void*&)org_GetD3d9Parameters);
+	Game::PatchMemory(addr, bytes, 1);
+	Game::InlineHook((void*)d3d9_addr, GetD3d9Parameters, (void*&)org_GetD3d9Parameters);
 
 	// d3d重设窗口
 	if (d3d9_addr && is_enable_d3d_addr && *is_enable_d3d_addr) {
@@ -98,7 +94,7 @@ void UnlockFPS::Start() {
 
 void UnlockFPS::ResetD3D() {
 	// 强制游戏重新加载d3d
-	HWND target = GetWar3Window();
+	HWND target = GetGameInstance()->GetGameWindow();
 	ShowWindow(target, SW_MINIMIZE);
 	ShowWindow(target, SW_SHOWNORMAL);
 }
@@ -128,7 +124,7 @@ void UnlockFPS::WriteFPSLimit() {
 	dm.dmDriverExtra = 0;
 	EnumDisplaySettings(NULL, ENUM_REGISTRY_SETTINGS, &dm);
 	if (dm.dmDisplayFrequency > 60) {
-		switch (this->m_War3Version) {
+		switch (GetGameInstance()->GetGameVersion()) {
 			case Version::v127b:
 				SetGameOptValue(GetGameOpt(), 0, 4,  (DWORD)&dm.dmDisplayFrequency);	// refreshrate
 				break;
@@ -141,6 +137,4 @@ void UnlockFPS::WriteFPSLimit() {
 	}
 }
 
-void UnlockFPS::Stop() {
-	DetachHook((void*)org_GetD3d9Parameters, GetD3d9Parameters);
-}
+void UnlockFPS::Stop() {}

@@ -89,37 +89,29 @@ int __fastcall SaveRep(DWORD pthis, DWORD unused, const char* path) {
 }
 
 void AutoRep::Start() {
-	if (this->m_Hooked) {
-		return;
-	}
-	this->m_Hooked = true;
-	if (!this->m_GamedllBase) {
-		ERROR_GAMEDLL_INIT();
-		return;
-	}
-	DWORD SaveRep_addr = 0;
-	switch (this->m_War3Version) {
+	DWORD pSaveRep = 0;
+	auto gameAddr = GetGameInstance()->GetGameDllBase();
+
+	switch (GetGameInstance()->GetGameVersion()) {
 	case Version::v120e:
-		SaveRep_addr = this->m_GamedllBase + 0x28D320;
+		pSaveRep = gameAddr + 0x28D320;
 		break;
 	case Version::v124e:
-		SaveRep_addr = this->m_GamedllBase + 0x53EE60;
+		pSaveRep = gameAddr + 0x53EE60;
 		break;
 	case Version::v126a:
-		SaveRep_addr = this->m_GamedllBase + 0x53E360;
+		pSaveRep = gameAddr + 0x53E360;
 		break;
 	case Version::v127a:
-		SaveRep_addr = this->m_GamedllBase + 0x3122C0;
+		pSaveRep = gameAddr + 0x3122C0;
 		break;
 	case Version::v127b:
-		SaveRep_addr = this->m_GamedllBase + 0x32FA30;
+		pSaveRep = gameAddr + 0x32FA30;
 		break;
 	default:
 		return;
 	}
-	InlineHook((void*)SaveRep_addr, SaveRep, (void*&)orgSaveRep);
+	Game::InlineHook((void*)pSaveRep, SaveRep, (void*&)orgSaveRep);
 }
 
-void AutoRep::Stop() {
-	DetachHook((void*)orgSaveRep, SaveRep);
-}
+void AutoRep::Stop() {}

@@ -24,37 +24,29 @@ int __fastcall OnNetDisconnected(DWORD *a1, int a2, int a3, const char *ArgList,
 }
 
 void CampaignFix::Start() {
-	if (this->m_Hooked) {
-		return;
-	}
-	this->m_Hooked = true;
-	if (!this->m_GamedllBase) {
-		ERROR_GAMEDLL_INIT();
-		return;
-	}
-	switch (this->m_War3Version) {
+	auto gameAddr = GetGameInstance()->GetGameDllBase();
+
+	switch (GetGameInstance()->GetGameVersion()) {
 	case Version::v120e:
-        NetDisconnected_addr = this->m_GamedllBase + 0x6D6E00;
-		InlineHook((void*)NetDisconnected_addr, OnNetDisconnected120E, (void*&)orgOnNetDisconnected120E);
+        NetDisconnected_addr = gameAddr + 0x6D6E00;
+		Game::InlineHook((void*)NetDisconnected_addr, OnNetDisconnected120E, (void*&)orgOnNetDisconnected120E);
 		return;
 	case Version::v124e:
-        NetDisconnected_addr = this->m_GamedllBase + 0x539620;
+        NetDisconnected_addr = gameAddr + 0x539620;
 		break;
 	case Version::v126a:
-        NetDisconnected_addr = this->m_GamedllBase + 0x538B20;
+        NetDisconnected_addr = gameAddr + 0x538B20;
 		break;
 	case Version::v127a:
-        NetDisconnected_addr = this->m_GamedllBase + 0x2F6950;
+        NetDisconnected_addr = gameAddr + 0x2F6950;
 		break;
 	case Version::v127b:
-        NetDisconnected_addr = this->m_GamedllBase + 0x3140C0;
+        NetDisconnected_addr = gameAddr + 0x3140C0;
 		break;
 	default:
 		return;
 	}
-	InlineHook((void*)NetDisconnected_addr, OnNetDisconnected, (void*&)orgOnNetDisconnected);
+	Game::InlineHook((void*)NetDisconnected_addr, OnNetDisconnected, (void*&)orgOnNetDisconnected);
 }
 
-void CampaignFix::Stop() {
-	DetachHook((void*)orgOnNetDisconnected, OnNetDisconnected);
-}
+void CampaignFix::Stop() {}

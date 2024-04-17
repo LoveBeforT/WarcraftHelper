@@ -1,113 +1,63 @@
-﻿#include "helper.h"
+﻿/**
+ * warcrafthelper main
+*/
+
+#include "helper.h"
+#include "game/warcraft.h"
+#include "plugin/sizebypass.h"
+#include "plugin/unlockfps.h"
+#include "plugin/widescreen.h"
+#include "plugin/windowfixer.h"
+#include "plugin/autorep.h"
+#include "plugin/showfps.h"
+#include "plugin/pathfix.h"
+#include "plugin/showhpbar.h"
+#include "plugin/campaignfix.h"
+#include "plugin/u9helper.h"
+#include "plugin/replayview.h"
+
 #include <atlstr.h>
 
 #pragma comment(lib, "Version.lib")
-
-Version GetWar3Version() {
-	char Data[2048];
-	memset(Data, 0, 2048);
-	if (!GetFileVersionInfo("Game.dll", 0, sizeof(Data), Data))
-	{
-		return Version::unknown;
-	}
-	VS_FIXEDFILEINFO *FileInfo;
-	UINT nBytes = 0;
-	VerQueryValue(Data, "\\", (void**)&FileInfo, &nBytes);
-	DWORD buildVersion = FileInfo->dwFileVersionLS & 0xffff;
-	return static_cast<Version>(buildVersion);
-}
+#pragma warning(disable:4996) 
 
 Helper::Helper() {
-	this->m_IsWar3 = IsWar3();
-	if (!this->m_IsWar3) {
-		return;
-	}
-	DWORD gamedll = (DWORD)GetModuleHandle("Game.dll");
-	Version gamedversion = GetWar3Version();
-	// 获取GameDll
-	this->m_GamedllBase = gamedll;
-	// 获取游戏版本
-	this->m_War3Version = gamedversion;
-
-	this->m_SizeBypass = SizeBypass(gamedll, gamedversion);
-	this->m_WideScreen = WideScreen(gamedll, gamedversion);
-	this->m_UnlockFPS = UnlockFPS(gamedll, gamedversion);
-	this->m_WindowFixer = WindowFixer(gamedll, gamedversion);
-	this->m_AutoRep = AutoRep(gamedll, gamedversion);
-	this->m_ShowFPS = ShowFPS(gamedll, gamedversion);
-	this->m_PathFix = PathFix(gamedll, gamedversion);
-	this->m_ShowHPBar = ShowHPBar(gamedll, gamedversion);
-	this->m_CampaignFix = CampaignFix(gamedll, gamedversion);
-	this->m_U9Helper = U9Helper(gamedll, gamedversion);
-	this->m_ReplayView = ReplayView(gamedll, gamedversion);
+	m_plugins.push_back(reinterpret_cast<IPlugin*>(new SizeBypass()));
+	m_plugins.push_back(reinterpret_cast<IPlugin*>(new WideScreen()));
+	m_plugins.push_back(reinterpret_cast<IPlugin*>(new UnlockFPS()));
+	m_plugins.push_back(reinterpret_cast<IPlugin*>(new WindowFixer()));
+	m_plugins.push_back(reinterpret_cast<IPlugin*>(new AutoRep()));
+	m_plugins.push_back(reinterpret_cast<IPlugin*>(new ShowFPS()));
+	m_plugins.push_back(reinterpret_cast<IPlugin*>(new PathFix()));
+	m_plugins.push_back(reinterpret_cast<IPlugin*>(new ShowHPBar()));
+	m_plugins.push_back(reinterpret_cast<IPlugin*>(new CampaignFix()));
+	m_plugins.push_back(reinterpret_cast<IPlugin*>(new U9Helper()));
+	m_plugins.push_back(reinterpret_cast<IPlugin*>(new ReplayView()));
 }
 
-Helper::~Helper() {
-}
+Helper::~Helper() {}
 
-void Helper::Start() {
-	if (!this->m_IsWar3) {
+void Helper::LoadPlugins() {
+	auto game = GetGameInstance();
+
+	if (game == NULL || !game->IsWarcraft()) {
 		return;
 	}
+
 #ifdef _DEBUG
 	InitConsole();
 #endif
-	
-	this->m_UnlockFPS.Start();
-	this->m_SizeBypass.Start();
-	this->m_WideScreen.Start();
-	this->m_AutoRep.Start();
-	this->m_ShowFPS.Start();
-	this->m_PathFix.Start();
-	this->m_ShowHPBar.Start();
-	this->m_WindowFixer.Start();
-	this->m_CampaignFix.Start();
-	this->m_U9Helper.Start();
-	this->m_ReplayView.Start();
 
-	this->LoadPlugins();
-}
-
-void Helper::Stop() {
-	if (!this->m_IsWar3) {
+	if (!game->GetGameDllBase()) {
+		ERROR_GAMEDLL_INIT();
 		return;
 	}
-
-	this->m_UnlockFPS.Stop();
-	this->m_SizeBypass.Stop();
-	this->m_WideScreen.Stop();
-	this->m_WindowFixer.Stop();
-	this->m_AutoRep.Stop();
-	this->m_ShowFPS.Stop();
-	this->m_PathFix.Stop();
-	this->m_ShowHPBar.Stop();
-	this->m_CampaignFix.Stop();
-	this->m_U9Helper.Stop();
-	this->m_ReplayView.Stop();
-	Sleep(60);
+	for (size_t i = 0; i < m_plugins.size(); i++) {
+		m_plugins[i]->Start();
+	}
 }
 
-bool IsWar3() {
-	TCHAR lpFilePATH[MAX_PATH];
-	memset(lpFilePATH, 0, MAX_PATH * sizeof(TCHAR));
-	::GetModuleFileName(NULL, lpFilePATH, MAX_PATH);
-	CString tmp;
-	tmp.Format("%s", lpFilePATH);
-	DWORD loc = tmp.ReverseFind('\\');
-	for (int i = loc + 1; i< MAX_PATH; i++) {
-		if (lpFilePATH[i] >= 'A' && lpFilePATH[i] <= 'Z'){
-			lpFilePATH[i] += 'a'-'A';
-		}
-	}
-	if (strncmp(lpFilePATH + loc + 1, "war3.exe",8)) {
-		return false;
-	}
-	return true;
-}
-
-
-bool InitConsole()
-{
+void Helper::InitConsole() {
 	AllocConsole();
 
 	freopen("CONIN$", "r", stdin);
@@ -130,14 +80,4 @@ bool InitConsole()
 	DrawMenuBar(hwnd);
 
 	ShowWindow(hwnd, SW_MINIMIZE);
-
-	return true;
-}
-
-void Helper::LoadPlugins() {
-	if (!this->m_GamedllBase) {
-		return;
-	}
-
-
 }

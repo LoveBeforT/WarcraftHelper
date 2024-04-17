@@ -19,7 +19,7 @@ void ResetWindow(HWND target) {
 DWORD __stdcall Listen(LPVOID lpThreadParameter) {
 	POINT point;        // 鼠标所在位置
 	HWND target;        // 目标窗口句柄
-	HWND org = GetWar3Window();        // 原窗口句柄
+	HWND org = GetGameInstance()->GetGameWindow();        // 原窗口句柄
 	while (1)
 	{
 		if (t_closed) {

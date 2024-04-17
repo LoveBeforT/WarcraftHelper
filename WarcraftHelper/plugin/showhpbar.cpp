@@ -35,16 +35,10 @@ DWORD __stdcall ShowBar(LPVOID lpThreadParameter) {
 }
 
 void ShowHPBar::Start() {
-	if (this->m_Hooked) {
-		return;
-	}
-	this->m_Hooked = true;
-	if (!this->m_GamedllBase) {
-		ERROR_GAMEDLL_INIT();
-		return;
-	}
+	DWORD showhp = 0;
 	DWORD SetGameStatus_addr = 0;
-	switch (m_War3Version) {
+
+	switch (GetGameInstance()->GetGameVersion()) {
 	case Version::v120e:
 		SetGameStatus_addr = 0x6F283B60;
 		break;
@@ -52,17 +46,17 @@ void ShowHPBar::Start() {
 		return;
 	}
 
-	DWORD is_showhp = ReadDwordFromReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Gameplay", "healthbars");
-	WriteDwordToReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Gameplay", "healthbars", is_showhp);
-	if (!is_showhp) {
+	showhp = System::ReadDwordFromReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Gameplay", "healthbars");
+	System::WriteDwordToReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Gameplay", "healthbars", showhp);
+	if (!showhp) {
 		return;
 	}
 	this->thread = CreateThread(NULL, NULL, ShowBar, NULL, NULL, NULL);
-	InlineHook((void*)SetGameStatus_addr, SetGameStatus, (void*&)orgSetGameStatus);
+	Game::InlineHook((void*)SetGameStatus_addr, SetGameStatus, (void*&)orgSetGameStatus);
 }
 
 void ShowHPBar::Stop() {
 	ShowHPBar_Closed = true;
-	DetachHook((void*)orgSetGameStatus, SetGameStatus);
+	Game::DetachHook((void*)orgSetGameStatus, SetGameStatus);
 	TerminateThread(this->thread, 0);
 }

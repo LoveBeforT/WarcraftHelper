@@ -1,5 +1,7 @@
-﻿// dllmain.cpp : 定义 DLL 应用程序的入口点。
+﻿
 #include "helper.h"
+
+#include <windows.h>
 
 #pragma comment(lib, "detours.lib")
 
@@ -8,15 +10,14 @@ BOOL APIENTRY DllMain( HMODULE hModule,
                        LPVOID lpReserved
                      )
 {
-    Helper h = Helper();
+    static auto h = Helper();
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
         DisableThreadLibraryCalls(hModule);
-		h.Start();
+		h.LoadPlugins();
 		break;
     case DLL_PROCESS_DETACH:
-        h.Stop();
         break;
     }
     return TRUE;

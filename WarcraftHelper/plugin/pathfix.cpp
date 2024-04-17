@@ -35,47 +35,39 @@ int __fastcall GetPathName(char* nameGB2312, DWORD edx, DWORD unk00, float unk01
 }
 
 void PathFix::Start() {
-	if (this->m_Hooked) {
-		return;
-	}
-	this->m_Hooked = true;
-	if (!this->m_GamedllBase) {
-		ERROR_GAMEDLL_INIT();
-		return;
-	}
-	switch (this->m_War3Version) {
+	auto gameAddr = GetGameInstance()->GetGameDllBase();
+
+	switch (GetGameInstance()->GetGameVersion()) {
 	case Version::v120e:
-		GetPathName_addr = this->m_GamedllBase + 0x2603E0;
-		PathCopy_addr = this->m_GamedllBase + 0x260489;
+		GetPathName_addr = gameAddr + 0x2603E0;
+		PathCopy_addr = gameAddr + 0x260489;
 		PathCopy_size = 0x31;
 		break;
 	case Version::v124e:
-		GetPathName_addr = this->m_GamedllBase + 0x5BD690;
-		PathCopy_addr = this->m_GamedllBase + 0x5BD754;
+		GetPathName_addr = gameAddr + 0x5BD690;
+		PathCopy_addr = gameAddr + 0x5BD754;
 		PathCopy_size = 0x3B;
 		break;
 	case Version::v126a:
-		GetPathName_addr = this->m_GamedllBase + 0x5BCEF0;
-		PathCopy_addr = this->m_GamedllBase + 0x5BCFB4;
+		GetPathName_addr = gameAddr + 0x5BCEF0;
+		PathCopy_addr = gameAddr + 0x5BCFB4;
 		PathCopy_size = 0x3B;
 		break;
 	case Version::v127a:
-		GetPathName_addr = this->m_GamedllBase + 0x2A2540;
-		PathCopy_addr = this->m_GamedllBase + 0x2A2619;
+		GetPathName_addr = gameAddr + 0x2A2540;
+		PathCopy_addr = gameAddr + 0x2A2619;
 		PathCopy_size = 0x35;
 		break;
 	case Version::v127b:
-		GetPathName_addr = this->m_GamedllBase + 0x2C0160;
-		PathCopy_addr = this->m_GamedllBase + 0x2C0239;
+		GetPathName_addr = gameAddr + 0x2C0160;
+		PathCopy_addr = gameAddr + 0x2C0239;
 		PathCopy_size = 0x35;
 		break;
 	default:
 		return;
 	}
-	InlineHook((void*)GetPathName_addr, GetPathName, (void*&)orgGetPathName);
-	WriteNOP((void*)PathCopy_addr, PathCopy_size);
+	Game::InlineHook((void*)GetPathName_addr, GetPathName, (void*&)orgGetPathName);
+	Game::WriteNOP((void*)PathCopy_addr, PathCopy_size);
 }
 
-void PathFix::Stop() {
-	DetachHook((void*)orgGetPathName, GetPathName);
-}
+void PathFix::Stop() {}

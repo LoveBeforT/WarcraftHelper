@@ -2,24 +2,11 @@
 
 void ReplayView::Start()
 {
-    DWORD replayMaxSpeedAddr01 = this->m_GamedllBase;
-    DWORD replayMaxSpeedAddr02 = this->m_GamedllBase;
-    DWORD replayMaxSpeedAddr03 = this->m_GamedllBase;
-    BYTE newSpeed = 0x10;
+    DWORD replayMaxSpeedAddr01 = GetGameInstance()->GetGameDllBase();
+    DWORD replayMaxSpeedAddr02 = GetGameInstance()->GetGameDllBase();
+    DWORD replayMaxSpeedAddr03 = GetGameInstance()->GetGameDllBase();
 
-    if (this->m_Hooked)
-    {
-        return;
-    }
-    this->m_Hooked = true;
-
-    if (!this->m_GamedllBase)
-    {
-        ERROR_GAMEDLL_INIT();
-        return;
-    }
-
-    switch (this->m_War3Version)
+    switch (GetGameInstance()->GetGameVersion())
     {
     case Version::v120e:
         replayMaxSpeedAddr01 += 0x0F1837;
@@ -50,11 +37,9 @@ void ReplayView::Start()
         return;
     }
 
-    WriteByte((void *)replayMaxSpeedAddr01, newSpeed);
-    WriteByte((void *)replayMaxSpeedAddr02, newSpeed);
-    WriteByte((void *)replayMaxSpeedAddr03, newSpeed);
+    Game::WriteBytes((void *)replayMaxSpeedAddr01, 0x10);
+    Game::WriteBytes((void *)replayMaxSpeedAddr02, 0x10);
+    Game::WriteBytes((void *)replayMaxSpeedAddr03, 0x10);
 }
 
-void ReplayView::Stop()
-{
-}
+void ReplayView::Stop() {}

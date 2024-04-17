@@ -1,15 +1,12 @@
 #include "sizebypass.h"
 
 void SizeBypass::Start() {
-	if (this->m_Hooked) {
-		return;
-	}
-	this->m_Hooked = true;
-	DWORD addr1 = this->m_GamedllBase;
-	DWORD addr2 = this->m_GamedllBase;
-	DWORD addr3 = this->m_GamedllBase;
 	DWORD bytes_size = 0;
-	switch (m_War3Version) {
+	DWORD addr1 = GetGameInstance()->GetGameDllBase();
+	DWORD addr2 = GetGameInstance()->GetGameDllBase();
+	DWORD addr3 = GetGameInstance()->GetGameDllBase();
+
+	switch (GetGameInstance()->GetGameVersion()) {
 	case Version::v120e:
 		addr1 += 0x6DD56D;
 		bytes_size = 7;
@@ -45,10 +42,9 @@ void SizeBypass::Start() {
 	}
 
 	unsigned char bytes[] = { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
-	PatchMemory(addr1, bytes, bytes_size);
-	PatchMemory(addr2, bytes, 11);
-	PatchMemory(addr3, bytes, 11);
+	Game::PatchMemory(addr1, bytes, bytes_size);
+	Game::PatchMemory(addr2, bytes, 11);
+	Game::PatchMemory(addr3, bytes, 11);
 }
 
-void SizeBypass::Stop() {
-}
+void SizeBypass::Stop() {}

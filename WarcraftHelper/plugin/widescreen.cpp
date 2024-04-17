@@ -7,7 +7,7 @@ void __fastcall CreateMatrixPerspectiveFov(float* outMatrix, DWORD edx, float fo
 {
 	RECT r;
 	float fWideScreenMul = 1.0f;
-	if (GetWindowRect(GetWar3Window(), &r))
+	if (GetWindowRect(GetGameInstance()->GetGameWindow(), &r))
 	{
 		float width = float(r.right - r.left);
 		float rHeight = 1.0f / (r.bottom - r.top);
@@ -36,32 +36,28 @@ void __fastcall CreateMatrixPerspectiveFov(float* outMatrix, DWORD edx, float fo
 }
 
 void WideScreen::Start() {
-	if (this->m_Hooked) {
-		return;
-	}
-	this->m_Hooked = true;
-	if (!this->m_GamedllBase) {
-		ERROR_GAMEDLL_INIT();
-		return;
-	}
-	HWND hwar3 = GetWar3Window();
+	DWORD fullscreen = 0;
+	HWND hwar3 = GetGameInstance()->GetGameWindow();
+	DWORD offset = GetGameInstance()->GetGameDllBase();
+
 	if (!hwar3) {
 		ERROR_GAMEWINDOW_INIT();
 		return;
 	}
+
 	// 设置全屏
-	DWORD auto_fullscreen = ReadDwordFromReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Video", "autofullscreen");
-	WriteDwordToReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Video", "autofullscreen", auto_fullscreen);
-	if (auto_fullscreen) {
+	fullscreen = System::ReadDwordFromReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Video", "autofullscreen");
+	System::WriteDwordToReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Video", "autofullscreen", fullscreen);
+	if (fullscreen) {
 		int w = GetSystemMetrics(SM_CXSCREEN);
 		int h = GetSystemMetrics(SM_CYSCREEN);
 		DWORD last_style = GetWindowLong(hwar3, GWL_STYLE);
 		SetWindowLongPtr(hwar3, GWL_STYLE, last_style ^ 0xCF0000);
 		SetWindowPos(hwar3, NULL, 0, 0, w, h, SWP_NOZORDER);
 	}
+
 	// 设置宽屏
-	DWORD offset = this->m_GamedllBase;
-	switch (this->m_War3Version) {
+	switch (GetGameInstance()->GetGameVersion()) {
 	case Version::v120e:
 		offset += 0x0DBD40;
 		break;
@@ -80,10 +76,8 @@ void WideScreen::Start() {
 	default:
 		return;
 	}
-	InlineHook((void*)offset, CreateMatrixPerspectiveFov, (void*&)p_orgCreateMatrixPerspectiveFov);
+	Game::InlineHook((void*)offset, CreateMatrixPerspectiveFov, (void*&)p_orgCreateMatrixPerspectiveFov);
 }
 
-void WideScreen::Stop() {
-	DetachHook((void*)p_orgCreateMatrixPerspectiveFov, CreateMatrixPerspectiveFov);
-}
+void WideScreen::Stop() {}
 
