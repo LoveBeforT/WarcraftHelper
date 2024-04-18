@@ -1,10 +1,15 @@
 #include "sizebypass.h"
+#include "config/config.h"
 
 void SizeBypass::Start() {
 	DWORD bytes_size = 0;
 	DWORD addr1 = GetGameInstance()->GetGameDllBase();
 	DWORD addr2 = GetGameInstance()->GetGameDllBase();
 	DWORD addr3 = GetGameInstance()->GetGameDllBase();
+
+    if (!GetConfig()->m_unlockMapSize) {
+        return;
+    }
 
 	switch (GetGameInstance()->GetGameVersion()) {
 	case Version::v120e:

@@ -1,4 +1,5 @@
 ﻿#include "widescreen.h"
+#include "config/config.h"
 #include <iostream>
 #include <process.h>
 
@@ -36,9 +37,12 @@ void __fastcall CreateMatrixPerspectiveFov(float* outMatrix, DWORD edx, float fo
 }
 
 void WideScreen::Start() {
-	DWORD fullscreen = 0;
 	HWND hwar3 = GetGameInstance()->GetGameWindow();
 	DWORD offset = GetGameInstance()->GetGameDllBase();
+
+    if (!GetConfig()->m_wideScreen) {
+        return;
+    }
 
 	if (!hwar3) {
 		ERROR_GAMEWINDOW_INIT();
@@ -46,9 +50,7 @@ void WideScreen::Start() {
 	}
 
 	// 设置全屏
-	fullscreen = System::ReadDwordFromReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Video", "autofullscreen");
-	System::WriteDwordToReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Video", "autofullscreen", fullscreen);
-	if (fullscreen) {
+	if (GetConfig()->m_fullScreen) {
 		int w = GetSystemMetrics(SM_CXSCREEN);
 		int h = GetSystemMetrics(SM_CYSCREEN);
 		DWORD last_style = GetWindowLong(hwar3, GWL_STYLE);

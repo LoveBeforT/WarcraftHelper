@@ -1,9 +1,13 @@
 ﻿#include "showfps.h"
+#include "config/config.h"
 
 void ShowFPS::Start() {
-	DWORD showfps = 0;
 	unsigned char bytes[] = { 0x01 };
 	DWORD offset = GetGameInstance()->GetGameDllBase();
+
+    if (!GetConfig()->m_showFps) {
+        return;
+    }
 
 	switch (GetGameInstance()->GetGameVersion()) {
 	case Version::v124e:
@@ -19,12 +23,6 @@ void ShowFPS::Start() {
 		offset += 0x3B55FA;
 		break;
 	default:
-		return;
-	}
-	
-	showfps = System::ReadDwordFromReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Video", "showfps");
-	System::WriteDwordToReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Video", "showfps", showfps);
-	if (!showfps) {
 		return;
 	}
 

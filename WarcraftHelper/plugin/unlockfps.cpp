@@ -1,4 +1,5 @@
 #include "unlockfps.h"
+#include "config/config.h"
 #include <iostream>
 #include <d3d9types.h>
 #include <d3d9caps.h>
@@ -32,6 +33,11 @@ void UnlockFPS::Start() {
 			0XBA, 0X11, 0X00, 0X00,
 			0X00, 0X8B, 0XCE, 0x00
 	};
+
+    if (!GetConfig()->m_unlockFps) {
+        return;
+    }
+
 	switch (GetGameInstance()->GetGameVersion()) {
 	case Version::v120e:
 		war3_addr = (DWORD)GetModuleHandle("war3.exe");

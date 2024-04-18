@@ -1,4 +1,5 @@
 ﻿#include "autorep.h"
+#include "config/config.h"
 #include <time.h>
 #include <iostream>
 
@@ -91,6 +92,10 @@ int __fastcall SaveRep(DWORD pthis, DWORD unused, const char* path) {
 void AutoRep::Start() {
 	DWORD pSaveRep = 0;
 	auto gameAddr = GetGameInstance()->GetGameDllBase();
+
+    if (!GetConfig()->m_autoRep) {
+        return;
+    }
 
 	switch (GetGameInstance()->GetGameVersion()) {
 	case Version::v120e:

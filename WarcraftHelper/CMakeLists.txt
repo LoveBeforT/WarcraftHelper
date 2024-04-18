@@ -2,7 +2,8 @@ project(WarcraftHelper)
 
 include_directories (
 	./
-	../3rd/Detours
+	../3rd/detours
+	../3rd/simpleini
 )
 
 file (

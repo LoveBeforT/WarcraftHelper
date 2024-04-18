@@ -1,4 +1,5 @@
 ﻿#include "showhpbar.h"
+#include "config/config.h"
 #include <iostream>
 
 bool ShowHPBar_Closed = false;
@@ -35,8 +36,11 @@ DWORD __stdcall ShowBar(LPVOID lpThreadParameter) {
 }
 
 void ShowHPBar::Start() {
-	DWORD showhp = 0;
 	DWORD SetGameStatus_addr = 0;
+
+    if (!GetConfig()->m_showHpBar) {
+        return;
+    }
 
 	switch (GetGameInstance()->GetGameVersion()) {
 	case Version::v120e:
@@ -46,11 +50,6 @@ void ShowHPBar::Start() {
 		return;
 	}
 
-	showhp = System::ReadDwordFromReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Gameplay", "healthbars");
-	System::WriteDwordToReg("SOFTWARE\\Blizzard Entertainment\\Warcraft III\\Gameplay", "healthbars", showhp);
-	if (!showhp) {
-		return;
-	}
 	this->thread = CreateThread(NULL, NULL, ShowBar, NULL, NULL, NULL);
 	Game::InlineHook((void*)SetGameStatus_addr, SetGameStatus, (void*&)orgSetGameStatus);
 }
