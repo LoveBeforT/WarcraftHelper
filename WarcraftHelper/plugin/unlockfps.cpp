@@ -28,7 +28,7 @@ void UnlockFPS::Start() {
 	DWORD d3d9_addr = 0;
 	DWORD *is_enable_d3d_addr = 0;
 	DWORD war3_addr = 0;
-	byte SetFPS_pattern[] = {
+	byte patterns[] = {
 			0X83, 0XE0, 0XFB, 0X53,
 			0XBA, 0X11, 0X00, 0X00,
 			0X00, 0X8B, 0XCE, 0x00
@@ -41,7 +41,7 @@ void UnlockFPS::Start() {
 	switch (GetGameInstance()->GetGameVersion()) {
 	case Version::v120e:
 		war3_addr = (DWORD)GetModuleHandle("war3.exe");
-		addr = GetGameInstance()->SearchPatterns(SetFPS_pattern, 11, war3_addr + 0x3DA00, war3_addr+ 0x100000);
+		addr = GetGameInstance()->SearchPatterns(patterns, 11, war3_addr + 0x3DA00, war3_addr+ 0x100000);
 		if (!addr) {
 			return;
 		}

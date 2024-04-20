@@ -56,6 +56,10 @@ public:
         return FALSE;
     }
 
+    static BOOL IsKeyDown(int key) {
+        short state = GetAsyncKeyState(key);
+        return (state & 0x8000) ? true : false;
+    }
 };
 
 class Game
