@@ -1,7 +1,7 @@
 #ifndef HELPER_H
 #define HELPER_H
 
-#include "plugin/plugin.h"
+#include "plugin/plugin.hpp"
 #include <vector>
 
 class Helper {

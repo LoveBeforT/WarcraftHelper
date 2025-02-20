@@ -1,5 +1,5 @@
-﻿#include "showfps.h"
-#include "config/config.h"
+﻿#include "showfps.hpp"
+#include "config/config.hpp"
 
 void ShowFPS::Start() {
 	unsigned char bytes[] = { 0x01 };

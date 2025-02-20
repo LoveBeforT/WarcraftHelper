@@ -1,5 +1,5 @@
-﻿#include "widescreen.h"
-#include "config/config.h"
+﻿#include "widescreen.hpp"
+#include "config/config.hpp"
 #include <iostream>
 #include <process.h>
 

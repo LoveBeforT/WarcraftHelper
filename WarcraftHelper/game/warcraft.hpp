@@ -5,7 +5,7 @@
 #ifndef GAME_WARCRAFT
 #define GAME_WARCRAFT
 
-#include "version.h"
+#include "version.hpp"
 #include <stdint.h>
 
 #define ERROR_GAMEDLL_INIT() {MessageBoxA(0, "GameDll was unable to init", "WHelper", 0);}

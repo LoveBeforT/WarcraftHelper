@@ -9,19 +9,19 @@ include_directories (
 file (
 	GLOB CONFIG_FILES
 	"./config/*.cpp"
-	"./config/*.h"
+	"./config/*.hpp"
 )
 
 file (
 	GLOB GAME_FILES
 	"./game/*.cpp"
-	"./game/*.h"
+	"./game/*.hpp"
 )
 
 file (
 	GLOB PLUGIN_FILES
 	"./plugin/*.cpp"
-	"./plugin/*.h"
+	"./plugin/*.hpp"
 )
 
 link_directories(../3rd/Detours)
@@ -32,7 +32,7 @@ source_group("plugin" FILES ${PLUGIN_FILES})
 
 file(GLOB WH_SRCS "./*.cpp")
 
-file(GLOB WH_HEADERS "./*.h")
+file(GLOB WH_HEADERS "./*.hpp")
 
 add_library(WarcraftHelper SHARED ${WH_SRCS} ${WH_HEADERS} ${CONFIG_FILES} ${GAME_FILES} ${PLUGIN_FILES})
 

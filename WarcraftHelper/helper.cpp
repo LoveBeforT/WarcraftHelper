@@ -2,19 +2,19 @@
  * warcrafthelper main
 */
 
-#include "helper.h"
-#include "game/warcraft.h"
-#include "plugin/sizebypass.h"
-#include "plugin/unlockfps.h"
-#include "plugin/widescreen.h"
-#include "plugin/windowfixer.h"
-#include "plugin/autorep.h"
-#include "plugin/showfps.h"
-#include "plugin/pathfix.h"
-#include "plugin/showhpbar.h"
-#include "plugin/campaignfix.h"
-#include "plugin/u9helper.h"
-#include "plugin/replayview.h"
+#include "helper.hpp"
+#include "game/warcraft.hpp"
+#include "plugin/sizebypass.hpp"
+#include "plugin/unlockfps.hpp"
+#include "plugin/widescreen.hpp"
+#include "plugin/windowfixer.hpp"
+#include "plugin/autorep.hpp"
+#include "plugin/showfps.hpp"
+#include "plugin/pathfix.hpp"
+#include "plugin/showhpbar.hpp"
+#include "plugin/campaignfix.hpp"
+#include "plugin/u9helper.hpp"
+#include "plugin/replayview.hpp"
 
 #include <atlstr.h>
 

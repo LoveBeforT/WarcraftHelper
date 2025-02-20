@@ -2,7 +2,7 @@
  * warcraft base functions
  */
 
-#include "warcraft.h"
+#include "warcraft.hpp"
 
 #include <detours.h>
 #include <utility>

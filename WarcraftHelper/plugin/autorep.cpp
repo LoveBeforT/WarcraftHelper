@@ -1,5 +1,5 @@
-﻿#include "autorep.h"
-#include "config/config.h"
+﻿#include "autorep.hpp"
+#include "config/config.hpp"
 #include <time.h>
 #include <iostream>
 

@@ -1,4 +1,4 @@
-#include "d3d9p.h"
+#include "d3d9p.hpp"
 
 #pragma comment(lib, "d3dx9.lib")
 

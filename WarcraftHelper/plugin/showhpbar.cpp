@@ -1,6 +1,6 @@
-﻿#include "showhpbar.h"
-#include "game/warcraft.h"
-#include "config/config.h"
+﻿#include "showhpbar.hpp"
+#include "game/warcraft.hpp"
+#include "config/config.hpp"
 #include <mutex>
 #include <iostream>
 

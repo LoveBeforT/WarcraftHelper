@@ -9,7 +9,7 @@ link_directories(../3rd/dxsdk/lib/x86)
 
 file(GLOB D3D9_SRCS "./*.cpp" "./*.def")
 
-file(GLOB D3D9_HEADERS "./*.h")
+file(GLOB D3D9_HEADERS "./*.hpp")
 
 add_library(d3d9 SHARED ${D3D9_SRCS} ${D3D9_HEADERS})
 

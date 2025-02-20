@@ -1,4 +1,4 @@
-﻿#include "windowfixer.h"
+﻿#include "windowfixer.hpp"
 
 bool t_closed = false;
 

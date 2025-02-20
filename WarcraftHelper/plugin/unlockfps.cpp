@@ -1,5 +1,5 @@
-#include "unlockfps.h"
-#include "config/config.h"
+#include "unlockfps.hpp"
+#include "config/config.hpp"
 #include <iostream>
 #include <d3d9types.h>
 #include <d3d9caps.h>

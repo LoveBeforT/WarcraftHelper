@@ -1,5 +1,5 @@
-#include "sizebypass.h"
-#include "config/config.h"
+#include "sizebypass.hpp"
+#include "config/config.hpp"
 
 void SizeBypass::Start() {
 	DWORD bytes_size = 0;

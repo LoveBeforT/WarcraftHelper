@@ -1,7 +1,7 @@
 #ifndef IPLUGIN
 #define IPLUGIN
 
-#include "game/warcraft.h"
+#include "game/warcraft.hpp"
 
 class IPlugin {
 public:

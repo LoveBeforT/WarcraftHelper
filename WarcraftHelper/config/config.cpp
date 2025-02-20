@@ -2,7 +2,7 @@
  * config
 */
 
-#include "config.h"
+#include "config.hpp"
 
 Config::Config() {
     CSimpleIniA ini;

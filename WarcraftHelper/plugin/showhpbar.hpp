@@ -1,7 +1,7 @@
 #pragma once
 #pragma once
 
-#include "plugin.h"
+#include "plugin.hpp"
 
 class ShowHPBar : IPlugin {
 public:
