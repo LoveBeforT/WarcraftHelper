@@ -19,7 +19,10 @@ void ResetWindow(HWND target) {
 DWORD __stdcall Listen(LPVOID lpThreadParameter) {
 	POINT point;        // 鼠标所在位置
 	HWND target;        // 目标窗口句柄
-	HWND org = GetGameInstance()->GetGameWindow();        // 原窗口句柄
+	DWORD origin_pid;
+	DWORD target_pid;
+	HWND org = GetGameInstance()->GetGameWindow(); // 原窗口句柄
+	GetWindowThreadProcessId(org, &origin_pid);
 	while (1)
 	{
 		if (t_closed) {
@@ -29,8 +32,13 @@ DWORD __stdcall Listen(LPVOID lpThreadParameter) {
 		{
 			GetCursorPos(&point);
 			target = WindowFromPoint(point);
-			if (target != NULL && target == org) {
-				ResetWindow(target);
+			if (target != NULL)
+			{
+				GetWindowThreadProcessId(target, &target_pid);
+				if (origin_pid == target_pid)
+				{
+					ResetWindow(target);
+				}
 			}
 		}
 		Sleep(50);
