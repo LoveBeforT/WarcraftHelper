@@ -38,4 +38,6 @@ add_library(WarcraftHelper SHARED ${WH_SRCS} ${WH_HEADERS} ${CONFIG_FILES} ${GAM
 
 target_link_libraries(WarcraftHelper detours.lib)
 
+target_compile_options(WarcraftHelper PRIVATE /Zc:threadSafeInit-)
+
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/../output)
