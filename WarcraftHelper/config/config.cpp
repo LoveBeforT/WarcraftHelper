@@ -17,6 +17,8 @@ Config::Config() {
     m_showHpBar = ini.GetBoolValue("Options", "ShowHPBar", false);
     m_autoRep = ini.GetBoolValue("Options", "AutoSaveReplay", false);
     m_fullScreen = ini.GetBoolValue("Options", "AutoFullScreen", false);
+    m_fpsLimit = ini.GetBoolValue("Options", "FpsLimit", false);
+    m_targetFps = ini.GetDoubleValue("Options", "TargetFps", 60.0);
 }
 
 

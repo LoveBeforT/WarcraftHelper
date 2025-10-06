@@ -13,6 +13,8 @@ public:
     bool m_unlockMapSize = false;
     bool m_showHpBar = false;
     bool m_autoRep = false;
+    bool m_fpsLimit = false;
+    double m_targetFps = 0.0f;
 };
 
 Config *GetConfig();

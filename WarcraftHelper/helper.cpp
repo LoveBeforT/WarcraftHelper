@@ -15,6 +15,7 @@
 #include "plugin/campaignfix.hpp"
 #include "plugin/u9helper.hpp"
 #include "plugin/replayview.hpp"
+#include "plugin/fpslimiter.hpp"
 
 #include <atlstr.h>
 
@@ -33,6 +34,7 @@ Helper::Helper() {
 	m_plugins.push_back(reinterpret_cast<IPlugin*>(new CampaignFix()));
 	m_plugins.push_back(reinterpret_cast<IPlugin*>(new U9Helper()));
 	m_plugins.push_back(reinterpret_cast<IPlugin*>(new ReplayView()));
+	m_plugins.push_back(reinterpret_cast<IPlugin*>(new FpsLimiter()));
 }
 
 Helper::~Helper() {}
