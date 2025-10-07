@@ -18,9 +18,10 @@ DWORD __fastcall DrawCall(DWORD ecx, DWORD edx, DWORD unk)
         std::chrono::steady_clock::time_point currentMilli = std::chrono::high_resolution_clock::now();
         auto diff = std::chrono::duration<double, std::micro>(currentMilli - g_lastPresentMilli);
 
-        if (diff.count() < g_frameMicro)
+        while (diff.count() < g_frameMicro)
 		{
-			std::this_thread::sleep_for(std::chrono::microseconds((long)(g_frameMicro - diff.count())));
+            currentMilli = std::chrono::high_resolution_clock::now();
+			diff = std::chrono::duration<double, std::micro>(currentMilli - g_lastPresentMilli);
 		}
         g_lastPresentMilli = currentMilli;  
     }
